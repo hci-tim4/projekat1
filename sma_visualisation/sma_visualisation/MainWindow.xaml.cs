@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
-using System.Windows.Controls.DataVisualization.Charting;
 
 namespace sma_visualisation
 {
@@ -26,7 +25,11 @@ namespace sma_visualisation
         public MainWindow()
         {
             InitializeComponent();
-
+            object wantedNode = app.FindName("DisplaySection");
+            if (wantedNode is StackPanel){
+                StackPanel panel = wantedNode as StackPanel;
+                panel.DataContext = new Data();
+            }
             
 
         }

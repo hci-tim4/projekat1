@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 
-namespace sma_visualization
+namespace sma_visualisation
 {
     public class ApiProcessing
     {

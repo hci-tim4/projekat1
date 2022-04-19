@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace sma_visualization
+namespace sma_visualisation
 {
     public class Data
     {
-        public string symbol {get;set;}
-        public string function { get; set; }
-        public DateTime last_refreshed_date { get; set; }
-        public string interval { get; set; }
-        public int time_period { get; set; }
-        public string series_type { get; set; }
-        public string interval_view { get; set; } //jos ne znamo sta je, 1 gdoina, 2 godine
+        public string symbol { get; set; } = "DIn";
+        public string function { get; set; } = "fun";
+        public DateTime last_refreshed_date { get; set; } = DateTime.Now;
+        public string interval { get; set; } = "close";
+        public int time_period { get; set; } = 350;
+        public string series_type { get; set; } = "open";
+        public string interval_view { get; set; } = "month"; //jos ne znamo sta je, 1 gdoina, 2 godine 
         public List<SMAValue> values { get; set; }    
     }
 }
