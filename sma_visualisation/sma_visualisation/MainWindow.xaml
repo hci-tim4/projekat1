@@ -9,7 +9,8 @@
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
        
-    Title="ChartTypeScatter">
+    Title="SMA Visualization"
+         Icon="C:\Users\Anastasija\Desktop\hci1-tim4\sma_visualisation\sma_visualisation\resources\graphic.png">
     <Grid x:Name="app" Background="#BAB2B5">
 
         <Grid.ColumnDefinitions>
@@ -41,93 +42,101 @@
 
         <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="2,2,2,2">
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="2,2,2,2" >
-        <Border BorderBrush="#373737" BorderThickness="2">
+                <Border BorderBrush="#373737" BorderThickness="2">
 
-                <Grid Background="#EDC7B7">
+                    <Grid Background="#EDC7B7">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
 
 
-                  
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Symbol:" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Name="symbol"  />
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Symbol:" />
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="symbol_tb"  />
 
 
                         <Label Content="Interval:" Margin="0,2,0,2" Grid.Row="1" Grid.Column="0"/>
-                    <ComboBox Grid.Row="1" Grid.Column="1" >
-                        <ComboBoxItem>1 min</ComboBoxItem>
-                        <ComboBoxItem>5 min</ComboBoxItem>
-                        <ComboBoxItem>15 min</ComboBoxItem>
-                        <ComboBoxItem>30 min</ComboBoxItem>
-                        <ComboBoxItem>60 min</ComboBoxItem>
-                        <ComboBoxItem>day</ComboBoxItem>
-                        <ComboBoxItem>week</ComboBoxItem>
-                        <ComboBoxItem>month</ComboBoxItem>
-                    </ComboBox>
+                        <ComboBox x:Name="interval_cb" Grid.Row="1" Grid.Column="1" >
+                            <ComboBoxItem>1min</ComboBoxItem>
+                            <ComboBoxItem>5min</ComboBoxItem>
+                            <ComboBoxItem>15min</ComboBoxItem>
+                            <ComboBoxItem>30min</ComboBoxItem>
+                            <ComboBoxItem>60min</ComboBoxItem>
+                            <ComboBoxItem>daily</ComboBoxItem>
+                            <ComboBoxItem>weekly</ComboBoxItem>
+                            <ComboBoxItem>monthly</ComboBoxItem>
+                        </ComboBox>
 
 
                         <Label Content="Time period:" Margin="0,2,0,2" Grid.Row="2" Grid.Column="0" />
-                    <DockPanel  Grid.Row="2" Grid.Column="1" >
-                        <TextBox Width="22" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
-                        <Slider x:Name="timePeriodSlider" Minimum="1" Maximum="200" ></Slider>
+                        <DockPanel  Grid.Row="2" Grid.Column="1" >
+                            <TextBox Width="22" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
+                            <Slider x:Name="timePeriodSlider" Minimum="1" Maximum="200" ></Slider>
 
-                    </DockPanel>
+                        </DockPanel>
 
 
-                    <Label Content="Series type:" Margin="0,2,0,2" Grid.Row="3" Grid.Column="0"/>
-                    <ComboBox Grid.Row="3" Grid.Column="1" >
-                        <ComboBoxItem>close</ComboBoxItem>
-                        <ComboBoxItem>open</ComboBoxItem>
-                        <ComboBoxItem>high</ComboBoxItem>
-                        <ComboBoxItem>low</ComboBoxItem>
-                    </ComboBox>
+                        <Label Content="Series type:" Margin="0,2,0,2" Grid.Row="3" Grid.Column="0"/>
+                        <ComboBox x:Name="series_type_cb" Grid.Row="3" Grid.Column="1" >
+                            <ComboBoxItem>close</ComboBoxItem>
+                            <ComboBoxItem>open</ComboBoxItem>
+                            <ComboBoxItem>high</ComboBoxItem>
+                            <ComboBoxItem>low</ComboBoxItem>
+                        </ComboBox>
 
-                    <Button Grid.Row="5" Grid.Column="1" Background="#AC3B61" Content="Show"></Button>
-            
-    </Grid>  
-        </Border>
-            
-        </StackPanel>
+                        <Label Content="Interval prikaza:" Margin="0,2,0,2" Grid.Row="4" Grid.Column="0"/>
+                        <ComboBox x:Name="interval_view_cb" Grid.Row="4" Grid.Column="1" >
+                            <ComboBoxItem>one year</ComboBoxItem>
+                            <ComboBoxItem>two years</ComboBoxItem>
+                            <ComboBoxItem>three years</ComboBoxItem>
+                            <ComboBoxItem>all</ComboBoxItem>
+                        </ComboBox>
 
-        
-        
-        <StackPanel x:Name="DisplaySection" VerticalAlignment="Top" Margin="2,2,2,2" Grid.Row="2" Grid.ColumnSpan="2" DataContext="Data" Background="#EEE2DC" >
-            <Border BorderBrush="#373737" BorderThickness="2">
-                <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
+                        <Button Click="show_btn_Click" Grid.Row="5" Grid.Column="1" Background="#AC3B61" x:Name="show_btn" Content="Show" Grid.RowSpan="5"/>
 
-                <Label Content="The lateast selected choices" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" />
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+
+
+
+            <StackPanel x:Name="DisplaySection" VerticalAlignment="Top" Margin="2,2,2,2" Grid.Row="2" Grid.ColumnSpan="2" DataContext="Data" Background="#EEE2DC" >
+                <Border BorderBrush="#373737" BorderThickness="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="The lateast selected choices" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" />
 
                         <Label Content="Symbol: " Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" />
                         <Label Content="{Binding Path=symbol }"  Grid.Row="1" Grid.Column="1" Margin="0,2,0,2"/>
@@ -149,14 +158,17 @@
 
                         <Label Content="Series type: " Grid.Row="7" Grid.Column="0" Margin="0,2,0,2" />
                         <Label Content="{Binding Path=series_type }"  Grid.Row="7" Grid.Column="1" Margin="0,2,0,2"/>
-                
-            </Grid>
 
-          </Border>     
+                    </Grid>
+
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation ="Horizontal" Grid.Row="0" Grid.Column="3" Margin="4,4,4,4">
+                <TextBox x:Name="result_tb"></TextBox>
+            </StackPanel>
         </StackPanel>
 
-        </StackPanel>
-
+        
 
     </Grid>
 </Window>

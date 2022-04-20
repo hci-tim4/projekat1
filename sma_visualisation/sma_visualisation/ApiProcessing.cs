@@ -9,14 +9,15 @@ namespace sma_visualisation
     {
         public static Data loadAPI(string symbol, string interval, string time_period, string series_type)
         {
-            string QUERY_URL = "https://www.alphavantage.co/query?function=SMA&symbol=" + symbol + "&interval=" + interval + "&time_period=" + time_period + "&series_type=" + series_type + "&apikey=demo";
+
+            string QUERY_URL = "https://www.alphavantage.co/query?function=SMA&symbol=" + symbol + "&interval=" + interval + "&time_period=" + time_period + "&series_type=" + series_type + "&apikey=EFYWRGACKQN6I4T3";
             Uri queryUri = new Uri(QUERY_URL);
+
 
             using (WebClient client = new WebClient())
             {
 
-                Dictionary<string, dynamic> json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                //meta data
+                dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
                 string data = Convert.ToString(json_data["Meta Data"]);
                 Console.WriteLine(data);
                 data = data.Replace("{", "");
@@ -32,7 +33,8 @@ namespace sma_visualisation
                 string time_zone_data = data_lines[6].Split(":")[2];
                 List<SMAValue> sma_values = new List<SMAValue>();
                 //values
-                string values = Convert.ToString(json_data["Technical Analysis: SMA"]);
+                //if (json_data.ContainsKey("Meta Data")) { values = json_data.GetValue("Technical Analysis: SMA").ToString(); }
+                string values =json_data["Technical Analysis: SMA"].ToString();
                 values = values.Replace("\"", "");
                 values = values.Replace("{", "");
                 values = values.Replace("}", "");
@@ -45,8 +47,8 @@ namespace sma_visualisation
                     SMAValue sma_value = new SMAValue { date = date,value=value };
                     sma_values.Add(sma_value);
                 }
-
-                Data meta_data = new Data { symbol = symbol_data, function = function_data, interval = interval_data, interval_view = "", last_refreshed_date = last_refreshed_data, series_type = series_type_data, time_period = time_period_data, values = sma_values };
+                
+                Data meta_data = new Data { symbol = "", function = "", interval = "", interval_view = "", last_refreshed_date = DateTime.Now, series_type = "", time_period = 10, values = sma_values };
                 return meta_data;
             }
 
