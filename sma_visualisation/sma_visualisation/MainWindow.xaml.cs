@@ -36,12 +36,15 @@ namespace sma_visualisation
 
         private void show_btn_Click(object sender, RoutedEventArgs e)
         {
-            string interval = interval_cb.SelectedItem.ToString();
+            ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
+            string interval = icbi.Content.ToString();
             int time_period = (int)timePeriodSlider.Value;
-            string series_type = (string)series_type_cb.SelectedItem.ToString();
+            ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
+            string series_type = cbi.Content.ToString();
             string symbol = symbol_tb.Text;
-            string interval_view = (string)interval_view_cb.SelectedItem.ToString();
+            string interval_view = ((System.Windows.Controls.ComboBoxItem)interval_view_cb.SelectedItem).Content as string;
             string interval_view_days = "all";
+            
             if(interval_view == "one year")
             {
                 interval_view_days = "366";
