@@ -40,17 +40,33 @@
             </DVC:Chart.Series>
         </DVC:Chart>    -->
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="2,2,2,2">
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="2,2,2,2" >
-                <Border BorderBrush="#373737" BorderThickness="2">
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Margin="2,2,1016,2">
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="8" Margin="2,2,2,2" >
+                <Border BorderBrush="#373737" BorderThickness="2" Height="270">
 
-                    <Grid Background="#EDC7B7">
+                    <Grid Background="#EDC7B7" Margin="0,0,0,3" Width="506">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -66,12 +82,13 @@
 
 
 
-                        <Label Grid.Row="0" Grid.Column="0" Content="Symbol:" />
-                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="symbol_tb"  />
+                        <Label FontSize="14" FontWeight="Bold" Grid.Row="0"  Grid.Column="0" Content="Symbol:" Grid.ColumnSpan="2"/>
+                        <TextBox Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="2" x:Name="symbol_tb"  />
+                        <Label Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="4" x:Name="symbol_validate_label"></Label>
+                        <Label Grid.Row="1"></Label>
 
-
-                        <Label Content="Interval:" Margin="0,2,0,2" Grid.Row="1" Grid.Column="0"/>
-                        <ComboBox x:Name="interval_cb" Grid.Row="1" Grid.Column="1" >
+                        <Label FontSize="14" FontWeight="Bold" Content="Interval:" Margin="0,2,0,2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="interval_cb" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" >
                             <ComboBoxItem>1min</ComboBoxItem>
                             <ComboBoxItem>5min</ComboBoxItem>
                             <ComboBoxItem>15min</ComboBoxItem>
@@ -81,34 +98,40 @@
                             <ComboBoxItem>weekly</ComboBoxItem>
                             <ComboBoxItem>monthly</ComboBoxItem>
                         </ComboBox>
+                        <Label Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="4" x:Name="interval_validate_label"></Label>
+                        <Label Grid.Row="3"></Label>
 
-
-                        <Label Content="Time period:" Margin="0,2,0,2" Grid.Row="2" Grid.Column="0" />
-                        <DockPanel  Grid.Row="2" Grid.Column="1" >
-                            <TextBox Width="22" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
-                            <Slider x:Name="timePeriodSlider" Minimum="1" Maximum="200" ></Slider>
+                        <Label FontSize="14" FontWeight="Bold" Content="Time period:" Margin="0,2,0,2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+                        <DockPanel  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" >
+                            <TextBox Width="30" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
+                            <Slider Height="20" x:Name="timePeriodSlider" Minimum="1" Maximum="200" ></Slider>
 
                         </DockPanel>
+                        <Label Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="4" x:Name="time_period_validate_label"></Label>
+                        <Label Grid.Row="5"></Label>
 
-
-                        <Label Content="Series type:" Margin="0,2,0,2" Grid.Row="3" Grid.Column="0"/>
-                        <ComboBox x:Name="series_type_cb" Grid.Row="3" Grid.Column="1" >
+                        <Label FontSize="14" FontWeight="Bold" Content="Series type:" Margin="0,0,0,2" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0"/>
+                        <ComboBox x:Name="series_type_cb" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" >
                             <ComboBoxItem>close</ComboBoxItem>
                             <ComboBoxItem>open</ComboBoxItem>
                             <ComboBoxItem>high</ComboBoxItem>
                             <ComboBoxItem>low</ComboBoxItem>
                         </ComboBox>
+                        <Label Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="4" x:Name="series_type_validate_label"></Label>
+                        <Label Grid.Row="7"></Label>
 
-                        <Label Content="Interval prikaza:" Margin="0,2,0,2" Grid.Row="4" Grid.Column="0"/>
-                        <ComboBox x:Name="interval_view_cb" Grid.Row="4" Grid.Column="1" >
+                        <Label FontSize="14" FontWeight="Bold" Content="View interval:" Margin="0,2,0,2" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="interval_view_cb" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" >
                             <ComboBoxItem>one year</ComboBoxItem>
                             <ComboBoxItem>two years</ComboBoxItem>
                             <ComboBoxItem>three years</ComboBoxItem>
                             <ComboBoxItem>all</ComboBoxItem>
                         </ComboBox>
+                        <Label Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="4" x:Name="view_interval_validate_label"></Label>
+                        <Label Grid.Row="9"></Label>
 
-                        <Button Click="show_btn_Click" Grid.Row="5" Grid.Column="1" Background="#AC3B61" x:Name="show_btn" Content="Show" Grid.RowSpan="5"/>
-
+                        <Button FontWeight="Bold" FontSize="16" Width ="130" Click="show_btn_Click" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Background="#AC3B61" x:Name="show_btn" Content="Show" Grid.RowSpan="5"/>
+                        <Label Grid.Row="10" x:Name="message_label" Grid.Column="4" Grid.ColumnSpan="3" Content="Sva polja su obavezna!" Foreground="Red" FontSize="15" FontWeight="Bold"></Label>
                     </Grid>
                 </Border>
 
@@ -116,48 +139,48 @@
 
 
 
-            <StackPanel x:Name="DisplaySection" VerticalAlignment="Top" Margin="2,2,2,2" Grid.Row="2" Grid.ColumnSpan="2" DataContext="Data" Background="#EEE2DC" >
-                <Border BorderBrush="#373737" BorderThickness="2">
+            <StackPanel x:Name="DisplaySection" Margin="2,2,2,2" Grid.Row="2" Grid.ColumnSpan="2" DataContext="Data" Background="#EEE2DC" Width="348" >
+                <Border BorderBrush="#373737" BorderThickness="2" Width="346">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="63*"/>
+                            <ColumnDefinition Width="113*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto" MinHeight="26"/>
+                            <RowDefinition Height="Auto" MinHeight="29.96"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label Content="The lateast selected choices" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" />
+                        <Label FontWeight="Bold" FontSize="11" Content="The lateast selected choices" HorizontalAlignment="Left" Grid.Row="0" Grid.ColumnSpan="2" Margin="98,0,0,0" Width="156" />
 
                         <Label Content="Symbol: " Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label  x:Name="symbol_label" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label  x:Name="symbol_label" Grid.Row="1" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                         <Label Content="Interval: " Grid.Row="2" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label  x:Name="interval_label"  Grid.Row="2" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label  x:Name="interval_label"  Grid.Row="2" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                         <Label Content="Time period: " Grid.Row="3" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label x:Name="time_period_label"  Grid.Row="3" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="time_period_label"  Grid.Row="3" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                         <Label Content="Function: " Grid.Row="4" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label x:Name="function_label"  Grid.Row="4" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="function_label"  Grid.Row="4" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                         <Label Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label x:Name="last_refreshed_date_label"  Grid.Row="5" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="last_refreshed_date_label"  Grid.Row="5" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                         <Label Content="Interval view: " Grid.Row="6" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label x:Name="interval_view_label"  Grid.Row="6" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="interval_view_label"  Grid.Row="6" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                         <Label Content="Series type: " Grid.Row="7" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label x:Name="series_type_label"  Grid.Row="7" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="series_type_label"  Grid.Row="7" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                     </Grid>
 
@@ -165,7 +188,7 @@
             </StackPanel>
         </StackPanel>
 
-        
+
 
     </Grid>
 </Window>

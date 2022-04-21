@@ -36,24 +36,53 @@ namespace sma_visualisation
 
         private void show_btn_Click(object sender, RoutedEventArgs e)
         {
+            string interval = "";
+            string series_type = "";
+            while(!ValidationEntry.validateComboBox(interval_cb))
+            {
+                interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
+            }
+            
             ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
-            string interval = icbi.Content.ToString();
+            interval = icbi.Content.ToString();
+            
+            interval_validate_label.Content = "";
+            
+            
+            //tekst box i slider provera??
             int time_period = (int)timePeriodSlider.Value;
+            while (!ValidationEntry.validateComboBox(series_type_cb))
+            {
+                series_type_validate_label.Content = "Izaberite neki od ponudjenih perioda!";
+            }
+            series_type_validate_label.Content = "";
             ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
-            string series_type = cbi.Content.ToString();
+            series_type = cbi.Content.ToString();
+
+            while (!ValidationEntry.emptyTextBox(symbol_tb))
+            {
+                symbol_validate_label.Content = "Unesite simbol!"; //PROVERIITI!!
+                
+            }
+            symbol_validate_label.Content = "";
             string symbol = symbol_tb.Text;
+            while (!ValidationEntry.validateComboBox(interval_view_cb))
+            {
+                view_interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
+            }
+            view_interval_validate_label.Content = "";
             string interval_view = ((System.Windows.Controls.ComboBoxItem)interval_view_cb.SelectedItem).Content as string;
             string interval_view_days = "all";
-            
-            if(interval_view == "one year")
+
+            if (interval_view == "one year")
             {
                 interval_view_days = "366";
             }
-            else if(interval_view == "two years")
+            else if (interval_view == "two years")
             {
                 interval_view_days = "732";
             }
-            else if(interval_view == "three years")
+            else if (interval_view == "three years")
             {
                 interval_view_days = "1098";
             }
@@ -69,8 +98,6 @@ namespace sma_visualisation
                 time_period_label.Content = loaded_data.time_period;
                 interval_view_label.Content = interval_view;
 
-
-
             }
             else
             {
@@ -84,6 +111,7 @@ namespace sma_visualisation
                 interval_view_label.Content = interval_view;
             }
         }
+  
 
         private Data filter_data(Data loaded_data, string interval_view_days)
         { 

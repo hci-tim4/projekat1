@@ -18,7 +18,10 @@ namespace sma_visualisation
             {
 
                 dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                
+                if(json_data == "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for SMA.\"}")
+                {
+                    //kako prikazatii??
+                }
                 string data = Convert.ToString(json_data["Meta Data"]);
                 Console.WriteLine(data);
                 data = data.Replace("\n", "");
