@@ -139,32 +139,29 @@
                         <Label Content="The lateast selected choices" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" />
 
                         <Label Content="Symbol: " Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label Content="{Binding Path=symbol }"  Grid.Row="1" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label  x:Name="symbol_label" Grid.Row="1" Grid.Column="1" Margin="0,2,0,2"/>
 
                         <Label Content="Interval: " Grid.Row="2" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label Content="{Binding Path=interval }"  Grid.Row="2" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label  x:Name="interval_label"  Grid.Row="2" Grid.Column="1" Margin="0,2,0,2"/>
 
                         <Label Content="Time period: " Grid.Row="3" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label Content="{Binding Path=time_period }"  Grid.Row="3" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="time_period_label"  Grid.Row="3" Grid.Column="1" Margin="0,2,0,2"/>
 
                         <Label Content="Function: " Grid.Row="4" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label Content="{Binding Path=function }"  Grid.Row="4" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="function_label"  Grid.Row="4" Grid.Column="1" Margin="0,2,0,2"/>
 
                         <Label Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label Content="{Binding Path=last_refreshed_date }"  Grid.Row="5" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="last_refreshed_date_label"  Grid.Row="5" Grid.Column="1" Margin="0,2,0,2"/>
 
                         <Label Content="Interval view: " Grid.Row="6" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label Content="{Binding Path=interval_view }"  Grid.Row="6" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="interval_view_label"  Grid.Row="6" Grid.Column="1" Margin="0,2,0,2"/>
 
                         <Label Content="Series type: " Grid.Row="7" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label Content="{Binding Path=series_type }"  Grid.Row="7" Grid.Column="1" Margin="0,2,0,2"/>
+                        <Label x:Name="series_type_label"  Grid.Row="7" Grid.Column="1" Margin="0,2,0,2"/>
 
                     </Grid>
 
                 </Border>
-            </StackPanel>
-            <StackPanel Orientation ="Horizontal" Grid.Row="0" Grid.Column="3" Margin="4,4,4,4">
-                <TextBox x:Name="result_tb"></TextBox>
             </StackPanel>
         </StackPanel>
 

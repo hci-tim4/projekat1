@@ -60,12 +60,28 @@ namespace sma_visualisation
             Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
             if (interval_view_days == "all")
             {
-                result_tb.Text = loaded_data.symbol;
+                //tabele i grafik
+                symbol_label.Content = loaded_data.symbol;
+                interval_label.Content = loaded_data.interval;
+                function_label.Content = loaded_data.function;
+                last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
+                series_type_label.Content = loaded_data.series_type;
+                time_period_label.Content = loaded_data.time_period;
+                interval_view_label.Content = interval_view;
+
+
+
             }
             else
             {
                 Data filtered_data = filter_data(loaded_data, interval_view_days);
-                result_tb.Text = filtered_data.symbol;
+                symbol_label.Content = loaded_data.symbol;
+                interval_label.Content = loaded_data.interval;
+                function_label.Content = loaded_data.function;
+                last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
+                series_type_label.Content = loaded_data.series_type;
+                time_period_label.Content = loaded_data.time_period;
+                interval_view_label.Content = interval_view;
             }
         }
 
@@ -83,9 +99,5 @@ namespace sma_visualisation
             return loaded_data;
         }
 
-        private void show_btn_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

@@ -18,19 +18,26 @@ namespace sma_visualisation
             {
 
                 dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                
                 string data = Convert.ToString(json_data["Meta Data"]);
                 Console.WriteLine(data);
+                data = data.Replace("\n", "");
                 data = data.Replace("{", "");
                 data = data.Replace("}", "");
                 Console.WriteLine(data);
                 string[] data_lines = data.Split(",");
                 string symbol_data = data_lines[0].Split(":")[2];
+                symbol_data = symbol_data.Replace("\"", "");
                 string function_data = data_lines[1].Split(":")[2];
-                DateTime last_refreshed_data = parseDate(data_lines[2].Split(":")[2]);
+                function_data = function_data.Replace("\"", "");
+                DateTime last_refreshed_data = parseDate(data_lines[2].Split(":")[2].Replace("\"",""));
                 string interval_data = data_lines[3].Split(":")[2];
-                int  time_period_data = int.Parse(data_lines[4].Split(":")[2]);
+                interval_data = interval_data.Replace("\"", "");
+                int  time_period_data = int.Parse(data_lines[4].Split(":")[2].Replace("\"", ""));
                 string series_type_data = data_lines[5].Split(":")[2];
+                series_type_data = series_type_data.Replace("\"", "");
                 string time_zone_data = data_lines[6].Split(":")[2];
+                time_zone_data = time_zone_data.Replace("\"", "");
                 List<SMAValue> sma_values = new List<SMAValue>();
                 //values
                 //if (json_data.ContainsKey("Meta Data")) { values = json_data.GetValue("Technical Analysis: SMA").ToString(); }
@@ -38,6 +45,7 @@ namespace sma_visualisation
                 values = values.Replace("\"", "");
                 values = values.Replace("{", "");
                 values = values.Replace("}", "");
+                values = values.Replace("\n", "");
                 string[] value_lines = values.Split(",");
                 foreach (string line in value_lines)
                 {
@@ -48,7 +56,7 @@ namespace sma_visualisation
                     sma_values.Add(sma_value);
                 }
                 
-                Data meta_data = new Data { symbol = "", function = "", interval = "", interval_view = "", last_refreshed_date = DateTime.Now, series_type = "", time_period = 10, values = sma_values };
+                Data meta_data = new Data { symbol = symbol_data, function = function_data, interval = interval_data, last_refreshed_date = last_refreshed_data, series_type = series_type_data, time_period = time_period_data, values = sma_values };
                 return meta_data;
             }
 
