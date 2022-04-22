@@ -8,8 +8,7 @@ namespace sma_visualisation
     public class ApiProcessing
     {
         public static Data loadAPI(string symbol, string interval, string time_period, string series_type)
-        {
-
+        {          
             string QUERY_URL = "https://www.alphavantage.co/query?function=SMA&symbol=" + symbol + "&interval=" + interval + "&time_period=" + time_period + "&series_type=" + series_type + "&apikey=EFYWRGACKQN6I4T3";
             Uri queryUri = new Uri(QUERY_URL);
 
@@ -18,10 +17,16 @@ namespace sma_visualisation
             {
 
                 dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                if(json_data == "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for SMA.\"}")
+                if (json_data.Count == 0)  // provera za {} nema podataka
+                {
+                    Console.WriteLine("asdfa");
+                }
+                if(json_data.ContainsKey("Error Message"))// == "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for SMA.\"}")
                 {
                     //kako prikazatii??
+                    Console.WriteLine("error ");
                 }
+
                 string data = Convert.ToString(json_data["Meta Data"]);
                 Console.WriteLine(data);
                 data = data.Replace("\n", "");
@@ -33,9 +38,10 @@ namespace sma_visualisation
                 symbol_data = symbol_data.Replace("\"", "");
                 string function_data = data_lines[1].Split(":")[2];
                 function_data = function_data.Replace("\"", "");
-                DateTime last_refreshed_data = parseDate(data_lines[2].Split(":")[2].Replace("\"",""));
+
+
                 string interval_data = data_lines[3].Split(":")[2];
-                interval_data = interval_data.Replace("\"", "");
+                interval_data = interval_data.Replace("\"", "").Trim();
                 int  time_period_data = int.Parse(data_lines[4].Split(":")[2].Replace("\"", ""));
                 string series_type_data = data_lines[5].Split(":")[2];
                 series_type_data = series_type_data.Replace("\"", "");
@@ -50,13 +56,34 @@ namespace sma_visualisation
                 values = values.Replace("}", "");
                 values = values.Replace("\n", "");
                 string[] value_lines = values.Split(",");
+
+                DateTime date;
+                double value;
+                DateTime last_refreshed_data = new DateTime();
                 foreach (string line in value_lines)
                 {
-                    string date_time = line.Split(":")[0];
-                    double value = Double.Parse(line.Split(":")[2]);
-                    DateTime date = parseDate(date_time);
-                    SMAValue sma_value = new SMAValue { Date = date,Value=value };
+      
+                    if (interval_data == "1min" || interval_data == "5min" || interval_data == "15min" || interval_data == "30min" || interval_data == "60min")
+                    {
+
+                        value = Double.Parse(line.Split(":")[3]);
+                        string date_time = line.Split(":")[0] +":"+ line.Split(":")[1];
+                        date = parseDateTime(date_time.Trim());
+                        string dateTimeSeconds = data_lines[2].Split(":")[2] + ":"+ data_lines[2].Split(":")[3] + ":" + data_lines[2].Split(":")[4];
+                        last_refreshed_data = parseDateTimeSeconds(dateTimeSeconds.Replace("\"", "").Trim());
+                    }
+                    else
+                    {
+                        value = Double.Parse(line.Split(":")[2]);
+                        date = parseDate(line.Split(":")[0]);
+                        last_refreshed_data = parseDate(data_lines[2].Split(":")[2].Replace("\"", ""));
+
+
+                    }
+
+                    SMAValue sma_value = new SMAValue { Date = date, Value=value };
                     sma_values.Add(sma_value);
+
                 }
                 
                 Data meta_data = new Data { symbol = symbol_data, function = function_data, interval = interval_data, last_refreshed_date = last_refreshed_data, series_type = series_type_data, time_period = time_period_data, Values = sma_values };
@@ -73,5 +100,34 @@ namespace sma_visualisation
             DateTime dateParsed = new DateTime(year, month, day);
             return dateParsed;
         }
+
+        private static DateTime parseDateTime(string dateTime)
+        {
+            string [] tokens = dateTime.Split(" ");
+            int year = int.Parse(tokens[0].Split("-")[0]);
+            int month = int.Parse(tokens[0].Split("-")[1]);
+            int day = int.Parse(tokens[0].Split("-")[2]);
+            int hour = int.Parse(tokens[1].Split(":")[0]);
+            int min = int.Parse(tokens[1].Split(":")[1]);
+
+            DateTime dateParsed = new DateTime(year, month, day, hour, min, 0);
+            return dateParsed;
+
+
+        }
+
+        private static DateTime parseDateTimeSeconds(string date) {
+            string[] tokens = date.Split(" ");
+            int year = int.Parse(tokens[0].Split("-")[0]);
+            int month = int.Parse(tokens[0].Split("-")[1]);
+            int day = int.Parse(tokens[0].Split("-")[2]);
+            int hour = int.Parse(tokens[1].Split(":")[0]);
+            int min = int.Parse(tokens[1].Split(":")[1]);
+            int sec = int.Parse(tokens[1].Split(":")[2]);
+
+            DateTime dateParsed = new DateTime(year, month, day, hour, min, sec);
+            return dateParsed;
+        }
+
 }
 }
