@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Configurations;
 
 namespace sma_visualisation
 {
@@ -24,6 +27,7 @@ namespace sma_visualisation
     {
         List<Window> openedWindows = new List<Window>();
         Data currentData;
+        public LineChartData lineChartData { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +37,8 @@ namespace sma_visualisation
                 panel.DataContext = new Data();
             }
             
-
+            lineChartData = new LineChartData();
+            lineChart.DataContext = this;
         }
 
         private void show_btn_Click(object sender, RoutedEventArgs e)
@@ -42,37 +47,37 @@ namespace sma_visualisation
             string series_type = "";
             while (!ValidationEntry.validateComboBox(interval_cb))
             {
-                interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
+                //interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
             }
 
             ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
             interval = icbi.Content.ToString();
 
-            interval_validate_label.Content = "";
+            //interval_validate_label.Content = "";
 
 
             //tekst box i slider provera??
             int time_period = (int)timePeriodSlider.Value;
             while (!ValidationEntry.validateComboBox(series_type_cb))
             {
-                series_type_validate_label.Content = "Izaberite neki od ponudjenih perioda!";
+                //series_type_validate_label.Content = "Izaberite neki od ponudjenih perioda!";
             }
-            series_type_validate_label.Content = "";
+            //series_type_validate_label.Content = "";
             ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
             series_type = cbi.Content.ToString();
 
             while (!ValidationEntry.emptyTextBox(symbol_tb))
             {
-                symbol_validate_label.Content = "Unesite simbol!"; //PROVERIITI!!
+                //symbol_validate_label.Content = "Unesite simbol!"; //PROVERIITI!!
 
             }
-            symbol_validate_label.Content = "";
+            //symbol_validate_label.Content = "";
             string symbol = symbol_tb.Text;
             while (!ValidationEntry.validateComboBox(interval_view_cb))
             {
-                view_interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
+                //view_interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
             }
-            view_interval_validate_label.Content = "";
+            //view_interval_validate_label.Content = "";
             string interval_view = ((System.Windows.Controls.ComboBoxItem)interval_view_cb.SelectedItem).Content as string;
             string interval_view_days = "all";
 
@@ -118,6 +123,12 @@ namespace sma_visualisation
                     currentData = filtered_data;
                 }
 
+
+
+
+
+
+
             }
             catch(NoDataException exeption)
             {
@@ -127,8 +138,44 @@ namespace sma_visualisation
             {
                 MessageBox.Show(exception.message);
             }
+            PrepareGraph();
+
         }
-  
+
+
+        private void PrepareGraph()
+        {
+   
+
+            lineChartData.reset();
+
+            ChartValues<double> values = new ChartValues<double>();
+
+            foreach (SMAValue sma in currentData.Values)
+            {
+                values.Add(sma.Value);
+                lineChartData.xAxisLabels.Add(sma.Date.ToString());
+                lineChartData.yAxisLabels.Add(sma.Value.ToString());
+            }
+
+            lineChartData.lineSeriesCollection.Add(new LineSeries()
+            {
+                Title = "Line chart",
+                Values = values,
+            //    Configuration = new CartesianMapper<double>().Y(value => value).Stroke(value => (value == values.Max())),
+                PointGeometry = DefaultGeometries.Diamond,
+                PointGeometrySize = 8,
+            });
+
+
+            DataContext = this;
+
+            var lineChartObject = (CartesianChart)this.FindName("lineChart");
+            lineChartObject.HideLegend();
+
+
+        }
+
 
         private Data filter_data(Data loaded_data, string interval_view_days)
         {

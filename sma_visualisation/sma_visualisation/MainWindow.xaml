@@ -5,36 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:sma_visualisation"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
-       
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"
         Title="SMA Visualization"
         Icon="/graphic.png">
     <Grid x:Name="app" Background="#BAB2B5">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"></ColumnDefinition>
-            <ColumnDefinition Width="121*"/>
-            <ColumnDefinition Width="171*"></ColumnDefinition>
-            <ColumnDefinition Width="1195*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
 
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="4" Margin="2,2,1016,2">
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Margin="2,2,2,2">
             <StackPanel Grid.Row="0" Grid.ColumnSpan="8" Margin="2,2,2,2" >
-                <Border BorderBrush="#373737" BorderThickness="2" Height="270">
+                <Border BorderBrush="#373737" BorderThickness="2" Height="250">
 
-                    <Grid Background="#EDC7B7" Margin="0,0,0,3" Width="506">
+                    <Grid Background="#EDC7B7" Margin="0,0,0,3" Width="400">
 
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -66,13 +67,11 @@
 
 
 
-                        <Label FontSize="14" FontWeight="Bold" Grid.Row="0"  Grid.Column="0" Content="Symbol:" Grid.ColumnSpan="2"/>
-                        <TextBox Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="2" x:Name="symbol_tb"  />
-                        <Label Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="4" x:Name="symbol_validate_label"></Label>
-                        <Label Grid.Row="1"></Label>
+                        <Label FontSize="17" FontWeight="Bold" Grid.Row="0"  Grid.Column="0" Content="Symbol*:" Grid.ColumnSpan="2" Margin="2,2,2,2"/>
+                        <TextBox Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="4" x:Name="symbol_tb" FontSize="17" Margin="2,2,2,2"/>
 
-                        <Label FontSize="14" FontWeight="Bold" Content="Interval:" Margin="0,2,0,2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-                        <ComboBox x:Name="interval_cb" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" >
+                        <Label FontSize="17" FontWeight="Bold" Margin="2,2,2,2" Content="Interval*:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="interval_cb" Margin="2,2,2,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" FontSize="17" >
                             <ComboBoxItem>1min</ComboBoxItem>
                             <ComboBoxItem>5min</ComboBoxItem>
                             <ComboBoxItem>15min</ComboBoxItem>
@@ -82,40 +81,32 @@
                             <ComboBoxItem>weekly</ComboBoxItem>
                             <ComboBoxItem>monthly</ComboBoxItem>
                         </ComboBox>
-                        <Label Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="4" x:Name="interval_validate_label"></Label>
-                        <Label Grid.Row="3"></Label>
 
-                        <Label FontSize="14" FontWeight="Bold" Content="Time period:" Margin="0,2,0,2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
-                        <DockPanel  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" >
-                            <TextBox Width="30" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
+                        <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="Time period*:" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+                        <DockPanel Margin="2,2,2,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" >
+                            <TextBox  FontSize="17" Width="35" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
                             <Slider Height="20" x:Name="timePeriodSlider" Minimum="1" Maximum="200" ></Slider>
 
                         </DockPanel>
-                        <Label Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="4" x:Name="time_period_validate_label"></Label>
-                        <Label Grid.Row="5"></Label>
 
-                        <Label FontSize="14" FontWeight="Bold" Content="Series type:" Margin="0,0,0,2" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0"/>
-                        <ComboBox x:Name="series_type_cb" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" >
+                        <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="Series type*:" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0"/>
+                        <ComboBox Margin="2,2,2,2" x:Name="series_type_cb" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4"  FontSize="17">
                             <ComboBoxItem>close</ComboBoxItem>
                             <ComboBoxItem>open</ComboBoxItem>
                             <ComboBoxItem>high</ComboBoxItem>
                             <ComboBoxItem>low</ComboBoxItem>
                         </ComboBox>
-                        <Label Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="4" x:Name="series_type_validate_label"></Label>
-                        <Label Grid.Row="7"></Label>
 
-                        <Label FontSize="14" FontWeight="Bold" Content="View interval:" Margin="0,2,0,2" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"/>
-                        <ComboBox x:Name="interval_view_cb" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" >
+                        <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="In the past*:" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <ComboBox Margin="2,2,2,2" x:Name="interval_view_cb" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4"  FontSize="17">
                             <ComboBoxItem>one year</ComboBoxItem>
                             <ComboBoxItem>two years</ComboBoxItem>
                             <ComboBoxItem>three years</ComboBoxItem>
                             <ComboBoxItem>all</ComboBoxItem>
                         </ComboBox>
-                        <Label Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="4" x:Name="view_interval_validate_label"></Label>
-                        <Label Grid.Row="9"></Label>
 
-                        <Button FontWeight="Bold" FontSize="16" Width ="130" Click="show_btn_Click" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Background="#AC3B61" x:Name="show_btn" Content="Show" Grid.RowSpan="5"/>
-                        <Label Grid.Row="10" x:Name="message_label" Grid.Column="4" Grid.ColumnSpan="3" Content="Sva polja su obavezna!" Foreground="Red" FontSize="15" FontWeight="Bold"></Label>
+                        <Button Margin="10,10,10,10" FontWeight="Bold" FontSize="18" Width ="130" Click="show_btn_Click" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Background="#AC3B61" x:Name="show_btn" Content="Show" Grid.RowSpan="5"/>
+                        
                     </Grid>
                 </Border>
 
@@ -143,28 +134,28 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label FontWeight="Bold" FontSize="11" Content="The lateast selected choices" HorizontalAlignment="Left" Grid.Row="0" Grid.ColumnSpan="2" Margin="98,0,0,0" Width="156" />
+                        <Label FontWeight="Bold" FontSize="16" Content="The lateast selected choices" HorizontalAlignment="Left" Grid.Row="0" Grid.ColumnSpan="2" Margin="98,0,0,0" Width="156" />
 
-                        <Label Content="Symbol: " Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label  x:Name="symbol_label" Grid.Row="1" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                        <Label FontSize="16" Content="Symbol: " Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" />
+                        <Label FontSize="16" x:Name="symbol_label" Grid.Row="1" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                        <Label Content="Interval: " Grid.Row="2" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label  x:Name="interval_label"  Grid.Row="2" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                        <Label FontSize="16" Content="Interval: " Grid.Row="2" Grid.Column="0" Margin="0,2,0,2" />
+                        <Label FontSize="16" x:Name="interval_label"  Grid.Row="2" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                        <Label Content="Time period: " Grid.Row="3" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label x:Name="time_period_label"  Grid.Row="3" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                        <Label FontSize="16" Content="Time period: " Grid.Row="3" Grid.Column="0"  Margin="0,2,0,2"/>
+                        <Label FontSize="16" x:Name="time_period_label"  Grid.Row="3" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                        <Label Content="Function: " Grid.Row="4" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label x:Name="function_label"  Grid.Row="4" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                        <Label FontSize="16" Content="Function: " Grid.Row="4" Grid.Column="0" Margin="0,2,0,2" />
+                        <Label FontSize="16" x:Name="function_label"  Grid.Row="4" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                        <Label Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label x:Name="last_refreshed_date_label"  Grid.Row="5" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                        <Label FontSize="16" Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
+                        <Label FontSize="16" x:Name="last_refreshed_date_label"  Grid.Row="5" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                        <Label Content="Interval view: " Grid.Row="6" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label x:Name="interval_view_label"  Grid.Row="6" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                        <Label FontSize="16" Content="Interval view: " Grid.Row="6" Grid.Column="0"  Margin="0,2,0,2"/>
+                        <Label FontSize="16" x:Name="interval_view_label"  Grid.Row="6" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                        <Label Content="Series type: " Grid.Row="7" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label x:Name="series_type_label"  Grid.Row="7" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                        <Label FontSize="16" Content="Series type: " Grid.Row="7" Grid.Column="0" Margin="0,2,0,2" />
+                        <Label FontSize="16" x:Name="series_type_label"  Grid.Row="7" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
                     </Grid>
 
@@ -172,8 +163,26 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Right" >
-            <Button MinWidth="150" Click="show_table_Click"  Background="#AC3B61" x:Name="show_table_btn" Content="Show Table" Grid.RowSpan="2"/>
+
+        <StackPanel  >
         </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="3" >
+            <WrapPanel HorizontalAlignment="Right">
+                <Button MinWidth="150"  FontSize="20" Click="show_table_Click" FontWeight="Bold" Background="#AC3B61" x:Name="show_table_btn" Content="Show Table" Grid.RowSpan="2"/>
+                
+            </WrapPanel>
+            <WrapPanel Background="#EEE2DC" Margin="2,2,2,2">
+                <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.lineSeriesCollection}" Width="1100" Height="400" Margin="2,2,2,2">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Value" Labels="{Binding Path=lineChartData.yAxisLabels}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Date" Labels="{Binding Path=lineChartData.xAxisLabels}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </WrapPanel>
+        </StackPanel>
+
     </Grid>
 </Window>

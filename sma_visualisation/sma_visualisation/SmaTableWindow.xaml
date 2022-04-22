@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SMA Values"
         Icon="\graphic.png"
-        Height="450" Width="800">
+        Height="450" Width="800" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
     <Grid Background="#EEE2DC">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -15,9 +15,9 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0">
@@ -64,7 +64,7 @@
                    ItemsSource="{Binding Path=Values }"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                    IsReadOnly="True" Name="dataGrid"
-                   Grid.Row="1" Grid.ColumnSpan="3" Background="#EEE2DC">
+                   Grid.Row="1" Grid.ColumnSpan="3" Background="#EEE2DC" CanUserSortColumns="False">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date (yyyy.MM.dd HH:mm)" Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"/>
