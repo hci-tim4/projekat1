@@ -22,6 +22,8 @@ namespace sma_visualisation
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Window> openedWindows = new List<Window>();
+        Data currentData;
         public MainWindow()
         {
             InitializeComponent();
@@ -87,6 +89,7 @@ namespace sma_visualisation
                 interval_view_days = "1098";
             }
             Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
+            currentData = loaded_data;
             if (interval_view_days == "all")
             {
                 //tabele i grafik
@@ -109,22 +112,48 @@ namespace sma_visualisation
                 series_type_label.Content = loaded_data.series_type;
                 time_period_label.Content = loaded_data.time_period;
                 interval_view_label.Content = interval_view;
+                currentData = filtered_data;
             }
         }
   
 
         private Data filter_data(Data loaded_data, string interval_view_days)
         { 
-            foreach(SMAValue value in loaded_data.values){
-                DateTime date = value.date;
+            foreach(SMAValue value in loaded_data.Values){
+                DateTime date = value.Date;
                 DateTime date_now = DateTime.Now;
                 var difference_dates = date_now - date;
                 if(difference_dates.Days > int.Parse(interval_view_days))
                 {
-                    loaded_data.values.Remove(value);
+                    loaded_data.Values.Remove(value);
                 }
             }
             return loaded_data;
+        }
+
+        private void show_table_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentData == null)
+            {
+                MessageBox.Show("There has to be selected values");
+                return;
+            }
+            if (currentData.Values.Count == 0)
+            {
+                //poruka
+                return;
+            }
+            Window tableWindow = new SmaTableWindow(currentData);
+            openedWindows.Add(tableWindow);
+            tableWindow.Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach (Window w in openedWindows)
+            {
+                w.Close();
+            }
         }
 
     }

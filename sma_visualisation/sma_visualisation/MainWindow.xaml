@@ -10,7 +10,7 @@
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
        
     Title="SMA Visualization"
-         Icon="C:\Users\Anastasija\Desktop\hci1-tim4\sma_visualisation\sma_visualisation\resources\graphic.png">
+         Icon="/graphic.png">
     <Grid x:Name="app" Background="#BAB2B5">
 
         <Grid.ColumnDefinitions>
@@ -188,6 +188,7 @@
             </StackPanel>
         </StackPanel>
 
+        <Button HorizontalAlignment="Left" MinWidth="150" Click="show_table_Click" Grid.Row="1" Grid.Column="3" Background="#AC3B61" x:Name="show_table_btn" Content="Show Table" Grid.RowSpan="2" Margin="1045,394,0,0"/>
 
 
     </Grid>

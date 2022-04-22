@@ -15,6 +15,14 @@ namespace sma_visualisation
         public int time_period { get; set; } = 350;
         public string series_type { get; set; } = "open";
         public string interval_view { get; set; } = "month"; //jos ne znamo sta je, 1 gdoina, 2 godine 
-        public List<SMAValue> values { get; set; }    
+        public List<SMAValue> Values { get; set; }
+
+
+        public void addValue(SMAValue value)
+        {
+            if (Values == null)
+                Values = new List<SMAValue>();
+            Values.Add(value);
+        }
     }
 }

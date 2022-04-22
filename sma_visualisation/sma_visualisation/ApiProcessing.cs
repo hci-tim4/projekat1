@@ -42,8 +42,8 @@ namespace sma_visualisation
                 string time_zone_data = data_lines[6].Split(":")[2];
                 time_zone_data = time_zone_data.Replace("\"", "");
                 List<SMAValue> sma_values = new List<SMAValue>();
-                //values
-                //if (json_data.ContainsKey("Meta Data")) { values = json_data.GetValue("Technical Analysis: SMA").ToString(); }
+                //Values
+                //if (json_data.ContainsKey("Meta Data")) { Values = json_data.GetValue("Technical Analysis: SMA").ToString(); }
                 string values =json_data["Technical Analysis: SMA"].ToString();
                 values = values.Replace("\"", "");
                 values = values.Replace("{", "");
@@ -55,11 +55,11 @@ namespace sma_visualisation
                     string date_time = line.Split(":")[0];
                     double value = Double.Parse(line.Split(":")[2]);
                     DateTime date = parseDate(date_time);
-                    SMAValue sma_value = new SMAValue { date = date,value=value };
+                    SMAValue sma_value = new SMAValue { Date = date,Value=value };
                     sma_values.Add(sma_value);
                 }
                 
-                Data meta_data = new Data { symbol = symbol_data, function = function_data, interval = interval_data, last_refreshed_date = last_refreshed_data, series_type = series_type_data, time_period = time_period_data, values = sma_values };
+                Data meta_data = new Data { symbol = symbol_data, function = function_data, interval = interval_data, last_refreshed_date = last_refreshed_data, series_type = series_type_data, time_period = time_period_data, Values = sma_values };
                 return meta_data;
             }
 

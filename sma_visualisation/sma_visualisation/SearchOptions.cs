@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace sma_visualisation
 {
-    public class SMAValue
+    class SearchOptions
     {
-        public DateTime Date { get; set; }
-        public double Value { get; set; }
+        public DateTime? startSelectedDate { get; set; } = null;
+        public DateTime? endSelectedDate { get; set; } = null;
     }
 }
