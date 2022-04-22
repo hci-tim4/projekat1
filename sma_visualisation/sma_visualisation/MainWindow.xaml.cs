@@ -40,17 +40,17 @@ namespace sma_visualisation
         {
             string interval = "";
             string series_type = "";
-            while(!ValidationEntry.validateComboBox(interval_cb))
+            while (!ValidationEntry.validateComboBox(interval_cb))
             {
                 interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
             }
-            
+
             ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
             interval = icbi.Content.ToString();
-            
+
             interval_validate_label.Content = "";
-            
-            
+
+
             //tekst box i slider provera??
             int time_period = (int)timePeriodSlider.Value;
             while (!ValidationEntry.validateComboBox(series_type_cb))
@@ -64,7 +64,7 @@ namespace sma_visualisation
             while (!ValidationEntry.emptyTextBox(symbol_tb))
             {
                 symbol_validate_label.Content = "Unesite simbol!"; //PROVERIITI!!
-                
+
             }
             symbol_validate_label.Content = "";
             string symbol = symbol_tb.Text;
@@ -88,31 +88,44 @@ namespace sma_visualisation
             {
                 interval_view_days = "1098";
             }
-            Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
-            currentData = loaded_data;
-            if (interval_view_days == "all")
+
+            try
             {
-                //tabele i grafik
-                symbol_label.Content = loaded_data.symbol;
-                interval_label.Content = loaded_data.interval;
-                function_label.Content = loaded_data.function;
-                last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
-                series_type_label.Content = loaded_data.series_type;
-                time_period_label.Content = loaded_data.time_period;
-                interval_view_label.Content = interval_view;
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
+                currentData = loaded_data;
+                if (interval_view_days == "all")
+                {
+                    //tabele i grafik
+                    symbol_label.Content = loaded_data.symbol;
+                    interval_label.Content = loaded_data.interval;
+                    function_label.Content = loaded_data.function;
+                    last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
+                    series_type_label.Content = loaded_data.series_type;
+                    time_period_label.Content = loaded_data.time_period;
+                    interval_view_label.Content = interval_view;
+
+                }
+                else
+                {
+                    Data filtered_data = filter_data(loaded_data, interval_view_days);
+                    symbol_label.Content = loaded_data.symbol;
+                    interval_label.Content = loaded_data.interval;
+                    function_label.Content = loaded_data.function;
+                    last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
+                    series_type_label.Content = loaded_data.series_type;
+                    time_period_label.Content = loaded_data.time_period;
+                    interval_view_label.Content = interval_view;
+                    currentData = filtered_data;
+                }
 
             }
-            else
+            catch(NoDataException exeption)
             {
-                Data filtered_data = filter_data(loaded_data, interval_view_days);
-                symbol_label.Content = loaded_data.symbol;
-                interval_label.Content = loaded_data.interval;
-                function_label.Content = loaded_data.function;
-                last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
-                series_type_label.Content = loaded_data.series_type;
-                time_period_label.Content = loaded_data.time_period;
-                interval_view_label.Content = interval_view;
-                currentData = filtered_data;
+                MessageBox.Show(exeption.message);
+            }
+            catch(InvalidApiCallException exception)
+            {
+                MessageBox.Show(exception.message);
             }
         }
   
@@ -143,7 +156,7 @@ namespace sma_visualisation
             }
             if (currentData.Values.Count == 0)
             {
-                //poruka
+                MessageBox.Show("There are no reults for the chosen data");
                 return;
             }
             Window tableWindow = new SmaTableWindow(currentData);

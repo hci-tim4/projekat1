@@ -20,6 +20,7 @@
             <ColumnDefinition Width="1195*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
 
         </Grid.RowDefinitions>
@@ -171,7 +172,8 @@
             </StackPanel>
         </StackPanel>
 
-        <Button HorizontalAlignment="Left" MinWidth="150" Click="show_table_Click" Grid.Row="1" Grid.Column="3" Background="#AC3B61" x:Name="show_table_btn" Content="Show Table" Grid.RowSpan="2" Margin="1045,394,0,0"/>
-
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Right" >
+            <Button MinWidth="150" Click="show_table_Click"  Background="#AC3B61" x:Name="show_table_btn" Content="Show Table" Grid.RowSpan="2"/>
+        </StackPanel>
     </Grid>
 </Window>

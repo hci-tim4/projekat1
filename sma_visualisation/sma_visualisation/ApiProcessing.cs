@@ -17,15 +17,18 @@ namespace sma_visualisation
             {
 
                 dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
-                if (json_data.Count == 0)  // provera za {} nema podataka
+                if (json_data.Count == 0)
                 {
-                    Console.WriteLine("asdfa");
+                    throw new NoDataException( "Za dati unos nema podataka");
+                   
+                    
                 }
-                if(json_data.ContainsKey("Error Message"))// == "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for SMA.\"}")
+                else if(json_data.ContainsKey("Error Message"))// == "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for SMA.\"}")
                 {
-                    //kako prikazatii??
-                    Console.WriteLine("error ");
+                    throw new InvalidApiCallException("Nevalidan API poziv");
+                   
                 }
+                else { 
 
                 string data = Convert.ToString(json_data["Meta Data"]);
                 Console.WriteLine(data);
@@ -88,6 +91,7 @@ namespace sma_visualisation
                 
                 Data meta_data = new Data { symbol = symbol_data, function = function_data, interval = interval_data, last_refreshed_date = last_refreshed_data, series_type = series_type_data, time_period = time_period_data, Values = sma_values };
                 return meta_data;
+                }
             }
 
     }
