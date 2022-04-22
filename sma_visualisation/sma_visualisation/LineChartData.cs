@@ -18,7 +18,7 @@ namespace sma_visualisation
         {
             lineSeriesCollection = new SeriesCollection();
             columnSeriesCollection = new SeriesCollection();
-            xAxisLabels = new List<string> { DateTime.Now.ToString()};
+            xAxisLabels = new List<string> { DateTime.Now.ToString("dd. MM. yyyy.") };
             yAxisLabels = new List<string> { "10", "20", "30", "40"};
         }
 

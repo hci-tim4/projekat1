@@ -17,6 +17,7 @@ using System.Drawing;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Configurations;
+using Image = System.Windows.Controls.Image;
 
 namespace sma_visualisation
 {
@@ -28,6 +29,7 @@ namespace sma_visualisation
         List<Window> openedWindows = new List<Window>();
         Data currentData;
         public LineChartData lineChartData { get; set; }
+        public LineChartData barChartData { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -39,45 +41,67 @@ namespace sma_visualisation
             
             lineChartData = new LineChartData();
             lineChart.DataContext = this;
+            barChartData = new LineChartData();
+            barChartPanel.DataContext = this;
+            
         }
 
         private void show_btn_Click(object sender, RoutedEventArgs e)
         {
+            List<string> hasToBeAdded = new List<string>();
             string interval = "";
             string series_type = "";
-            while (!ValidationEntry.validateComboBox(interval_cb))
+            if (!ValidationEntry.validateComboBox(interval_cb))
             {
-                //interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
+                hasToBeAdded.Add("interval");
             }
-
-            ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
-            interval = icbi.Content.ToString();
-
-            //interval_validate_label.Content = "";
 
 
             //tekst box i slider provera??
             int time_period = (int)timePeriodSlider.Value;
-            while (!ValidationEntry.validateComboBox(series_type_cb))
+            if (!ValidationEntry.validateComboBox(series_type_cb))
             {
-                //series_type_validate_label.Content = "Izaberite neki od ponudjenih perioda!";
+                hasToBeAdded.Add("period");
             }
-            //series_type_validate_label.Content = "";
-            ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
-            series_type = cbi.Content.ToString();
 
-            while (!ValidationEntry.emptyTextBox(symbol_tb))
+            if (!ValidationEntry.emptyTextBox(symbol_tb))
             {
+                hasToBeAdded.Add("simbol");
                 //symbol_validate_label.Content = "Unesite simbol!"; //PROVERIITI!!
 
             }
-            //symbol_validate_label.Content = "";
-            string symbol = symbol_tb.Text;
-            while (!ValidationEntry.validateComboBox(interval_view_cb))
+
+            if (!ValidationEntry.validateComboBox(interval_view_cb))
             {
-                //view_interval_validate_label.Content = "Izaberite neki od ponudjenih intervala!";
+                hasToBeAdded.Add("interval of years");
             }
-            //view_interval_validate_label.Content = "";
+
+            if (hasToBeAdded.Count != 0)
+            {
+                string notify = "You have to give the following parameters: ";
+                foreach(string str in hasToBeAdded)
+                {
+                    notify = notify + str ;
+                    if (str != hasToBeAdded[hasToBeAdded.Count - 1])
+                    {
+                        notify = notify + " ,";
+                    }
+                    else
+                    {
+                        notify = notify + "!";
+                    }
+                }
+                MessageBox.Show(notify);
+                return;
+            }
+
+            ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
+            interval = icbi.Content.ToString();
+            ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
+            series_type = cbi.Content.ToString();
+
+            string symbol = symbol_tb.Text;
+
             string interval_view = ((System.Windows.Controls.ComboBoxItem)interval_view_cb.SelectedItem).Content as string;
             string interval_view_days = "all";
 
@@ -127,8 +151,6 @@ namespace sma_visualisation
 
 
 
-
-
             }
             catch(NoDataException exeption)
             {
@@ -139,23 +161,76 @@ namespace sma_visualisation
                 MessageBox.Show(exception.message);
             }
             PrepareGraph();
+//            PrepareBarsGraph();
 
         }
 
+        private void PrepareBarsGraph()
+        {
+            ChartValues<double> values = new ChartValues<double>();
 
-        private void PrepareGraph()
+            foreach (SMAValue sma in currentData.Values)
+            {
+                values.Add(sma.Value);
+                lineChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
+                lineChartData.yAxisLabels.Add(sma.Value.ToString());
+            }
+
+
+            barChartData.columnSeriesCollection.Add(new ColumnSeries()
+            {
+                Title = "Bar Chart",
+                Values = values,
+          //      Configuration = new CartesianMapper<double>().Y(value => value).Stroke(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.CornflowerBlue).Fill(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.AliceBlue),
+                PointGeometry = DefaultGeometries.Diamond
+
+            });
+
+            var barChartObject = (CartesianChart)this.FindName("barChart");
+            barChartObject.HideLegend();
+
+
+            /*  barChartData.columnSeriesCollection = new SeriesCollection
+              {
+                  new ColumnSeries
+                  {
+                      Values = new ChartValues<double> { 10, 50, 39, 50 }//REDEFINISATI
+                  }
+              };
+
+              //adding series will update and animate the chart automatically
+              barChartData.lineSeriesCollection.Add(new ColumnSeries
+              {
+                  Values = new ChartValues<double> { 11, 56, 42 }//REDEFINISATI
+              });
+
+              //also adding values updates and animates the chart automatically
+              barChartData.lineSeriesCollection[0].Values.Add(48d);
+            */
+
+
+        }
+
+    
+
+    private void PrepareGraph()
         {
    
 
             lineChartData.reset();
+            barChartData.reset();
 
             ChartValues<double> values = new ChartValues<double>();
 
             foreach (SMAValue sma in currentData.Values)
             {
                 values.Add(sma.Value);
-                lineChartData.xAxisLabels.Add(sma.Date.ToString());
+                lineChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
                 lineChartData.yAxisLabels.Add(sma.Value.ToString());
+
+                barChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
+                barChartData.yAxisLabels.Add(sma.Value.ToString());
+
             }
 
             lineChartData.lineSeriesCollection.Add(new LineSeries()
@@ -167,6 +242,14 @@ namespace sma_visualisation
                 PointGeometrySize = 8,
             });
 
+            barChartData.columnSeriesCollection.Add(new ColumnSeries()
+            {
+                Title = "Bar Chart",
+                Values = values,
+                //      Configuration = new CartesianMapper<double>().Y(value => value).Stroke(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.CornflowerBlue).Fill(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.AliceBlue),
+                PointGeometry = DefaultGeometries.Diamond
+
+            });
 
             DataContext = this;
 
