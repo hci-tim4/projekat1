@@ -10,13 +10,14 @@
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
        
     Title="SMA Visualization"
-         Icon="C:\Users\Anastasija\Desktop\hci1-tim4\sma_visualisation\sma_visualisation\resources\graphic.png">
+    Icon="/graphic.png">
     <Grid x:Name="app" Background="#BAB2B5">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="7*"></ColumnDefinition>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+            <ColumnDefinition Width="121*"/>
+            <ColumnDefinition Width="171*"></ColumnDefinition>
+            <ColumnDefinition Width="1195*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -40,7 +41,7 @@
             </DVC:Chart.Series>
         </DVC:Chart>    -->
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Margin="2,2,1016,2">
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="4" Margin="2,2,1016,2">
             <StackPanel Grid.Row="0" Grid.ColumnSpan="8" Margin="2,2,2,2" >
                 <Border BorderBrush="#373737" BorderThickness="2" Height="270">
 
@@ -188,6 +189,7 @@
             </StackPanel>
         </StackPanel>
 
+       
 
 
     </Grid>

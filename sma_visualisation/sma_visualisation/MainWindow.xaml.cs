@@ -114,16 +114,19 @@ namespace sma_visualisation
   
 
         private Data filter_data(Data loaded_data, string interval_view_days)
-        { 
+        {
+            List<SMAValue> filtered_list = new List<SMAValue>();
             foreach(SMAValue value in loaded_data.values){
                 DateTime date = value.date;
                 DateTime date_now = DateTime.Now;
                 var difference_dates = date_now - date;
-                if(difference_dates.Days > int.Parse(interval_view_days))
+                if(difference_dates.Days < int.Parse(interval_view_days))
                 {
-                    loaded_data.values.Remove(value);
+                    filtered_list.Add(value);
                 }
             }
+            loaded_data.values = filtered_list;
+            
             return loaded_data;
         }
 
