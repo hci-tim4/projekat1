@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Text.Json;
 
@@ -19,13 +20,13 @@ namespace sma_visualisation
                 dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
                 if (json_data.Count == 0)
                 {
-                    throw new NoDataException( "Za dati unos nema podataka");
+                    throw new NoDataException( "No data for this enter.");
                    
                     
                 }
                 else if(json_data.ContainsKey("Error Message"))// == "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for SMA.\"}")
                 {
-                    throw new InvalidApiCallException("Nevalidan API poziv");
+                    throw new InvalidApiCallException("Invalid API call");
                    
                 }
                 else { 
@@ -69,8 +70,8 @@ namespace sma_visualisation
       
                     if (interval_data == "1min" || interval_data == "5min" || interval_data == "15min" || interval_data == "30min" || interval_data == "60min")
                     {
-
-                        value = Double.Parse(line.Split(":")[3]);
+                        string [] tokens = line.Split(":");
+                        value = Double.Parse(tokens[3].Trim(), CultureInfo.InvariantCulture);
                         string date_time = line.Split(":")[0] +":"+ line.Split(":")[1];
                         date = parseDateTime(date_time.Trim());
                         string dateTimeSeconds = data_lines[2].Split(":")[2] + ":"+ data_lines[2].Split(":")[3] + ":" + data_lines[2].Split(":")[4];
@@ -78,10 +79,10 @@ namespace sma_visualisation
                     }
                     else
                     {
-                        value = Double.Parse(line.Split(":")[2]);
+                        string[] tokens = line.Split(":");
+                        value = Double.Parse(tokens[2].Trim(), CultureInfo.InvariantCulture);
                         date = parseDate(line.Split(":")[0]);
                         last_refreshed_data = parseDate(data_lines[2].Split(":")[2].Replace("\"", ""));
-
 
                     }
 
