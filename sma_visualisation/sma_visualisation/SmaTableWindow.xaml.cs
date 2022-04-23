@@ -367,5 +367,6 @@ namespace sma_visualisation
             updateDataGrid();
             refreshPagination();
         }
+
     }
 }

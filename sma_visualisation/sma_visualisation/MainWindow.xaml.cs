@@ -43,7 +43,8 @@ namespace sma_visualisation
             lineChart.DataContext = this;
             barChartData = new LineChartData();
             barChartPanel.DataContext = this;
-            
+
+            Formatter = value => value.ToString("N");
         }
 
         private void show_btn_Click(object sender, RoutedEventArgs e)
@@ -117,39 +118,23 @@ namespace sma_visualisation
             {
                 interval_view_days = "1098";
             }
-
+            InformationBox ibox = new InformationBox();
             try
             {
+                ibox.Show();
                 Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
                 currentData = loaded_data;
                 if (interval_view_days == "all")
                 {
-                    //tabele i grafik
-                    symbol_label.Content = loaded_data.symbol;
-                    interval_label.Content = loaded_data.interval;
-                    function_label.Content = loaded_data.function;
-                    last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
-                    series_type_label.Content = loaded_data.series_type;
-                    time_period_label.Content = loaded_data.time_period;
-                    interval_view_label.Content = interval_view;
-
                 }
                 else
                 {
                     Data filtered_data = filter_data(loaded_data, interval_view_days);
-                    symbol_label.Content = loaded_data.symbol;
-                    interval_label.Content = loaded_data.interval;
-                    function_label.Content = loaded_data.function;
-                    last_refreshed_date_label.Content = Convert.ToString(loaded_data.last_refreshed_date);
-                    series_type_label.Content = loaded_data.series_type;
-                    time_period_label.Content = loaded_data.time_period;
-                    interval_view_label.Content = interval_view;
                     currentData = filtered_data;
                 }
+                page.Content = new InformationDisplay(currentData);
 
-
-
-
+                PrepareGraph();
 
             }
             catch(NoDataException exeption)
@@ -160,71 +145,30 @@ namespace sma_visualisation
             {
                 MessageBox.Show(exception.message);
             }
-            PrepareGraph();
-//            PrepareBarsGraph();
-
-        }
-
-        private void PrepareBarsGraph()
-        {
-            ChartValues<double> values = new ChartValues<double>();
-
-            foreach (SMAValue sma in currentData.Values)
+            finally
             {
-                values.Add(sma.Value);
-                lineChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
-                lineChartData.yAxisLabels.Add(sma.Value.ToString());
+                ibox.Close();
             }
 
-
-            barChartData.columnSeriesCollection.Add(new ColumnSeries()
-            {
-                Title = "Bar Chart",
-                Values = values,
-          //      Configuration = new CartesianMapper<double>().Y(value => value).Stroke(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.CornflowerBlue).Fill(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.AliceBlue),
-                PointGeometry = DefaultGeometries.Diamond
-
-            });
-
-            var barChartObject = (CartesianChart)this.FindName("barChart");
-            barChartObject.HideLegend();
-
-
-            /*  barChartData.columnSeriesCollection = new SeriesCollection
-              {
-                  new ColumnSeries
-                  {
-                      Values = new ChartValues<double> { 10, 50, 39, 50 }//REDEFINISATI
-                  }
-              };
-
-              //adding series will update and animate the chart automatically
-              barChartData.lineSeriesCollection.Add(new ColumnSeries
-              {
-                  Values = new ChartValues<double> { 11, 56, 42 }//REDEFINISATI
-              });
-
-              //also adding values updates and animates the chart automatically
-              barChartData.lineSeriesCollection[0].Values.Add(48d);
-            */
-
-
         }
+        public Func<double, string> Formatter { get; set; }
 
+       
     
 
-    private void PrepareGraph()
+        private void PrepareGraph()
         {
    
-
             lineChartData.reset();
             barChartData.reset();
 
             ChartValues<double> values = new ChartValues<double>();
+            ChartValues<double> barChartValues = new ChartValues<double>();
 
             foreach (SMAValue sma in currentData.Values)
             {
                 values.Add(sma.Value);
+                barChartValues.Add(sma.Value);
                 lineChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
                 lineChartData.yAxisLabels.Add(sma.Value.ToString());
 
@@ -237,16 +181,14 @@ namespace sma_visualisation
             {
                 Title = "Line chart",
                 Values = values,
-            //    Configuration = new CartesianMapper<double>().Y(value => value).Stroke(value => (value == values.Max())),
                 PointGeometry = DefaultGeometries.Diamond,
                 PointGeometrySize = 8,
             });
 
-            barChartData.columnSeriesCollection.Add(new ColumnSeries()
+            barChartData.lineSeriesCollection.Add(new ColumnSeries()
             {
                 Title = "Bar Chart",
-                Values = values,
-                //      Configuration = new CartesianMapper<double>().Y(value => value).Stroke(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.CornflowerBlue).Fill(value => (value == values.Max()) ? Brushes.LightGreen : (value == values.Min()) ? Brushes.LightPink : Brushes.AliceBlue),
+                Values = barChartValues,
                 PointGeometry = DefaultGeometries.Diamond
 
             });
@@ -255,7 +197,7 @@ namespace sma_visualisation
 
             var lineChartObject = (CartesianChart)this.FindName("lineChart");
             lineChartObject.HideLegend();
-
+            Formatter = value => value.ToString("N");
 
         }
 

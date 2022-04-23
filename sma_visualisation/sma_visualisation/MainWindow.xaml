@@ -113,54 +113,10 @@
             </StackPanel>
 
 
-
-            <StackPanel x:Name="DisplaySection" Margin="2,2,2,2" Grid.Row="2" Grid.ColumnSpan="2" DataContext="Data" Background="#EEE2DC" Width="348" >
-                <Border BorderBrush="#373737" BorderThickness="2" Width="346">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="63*"/>
-                            <ColumnDefinition Width="113*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" MinHeight="26"/>
-                            <RowDefinition Height="Auto" MinHeight="29.96"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <Label FontWeight="Bold" FontSize="16" Content="The lateast selected choices" HorizontalAlignment="Left" Grid.Row="0" Grid.ColumnSpan="2" Margin="98,0,0,0" Width="156" />
-
-                        <Label FontSize="16" Content="Symbol: " Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label FontSize="16" x:Name="symbol_label" Grid.Row="1" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
-
-                        <Label FontSize="16" Content="Interval: " Grid.Row="2" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label FontSize="16" x:Name="interval_label"  Grid.Row="2" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
-
-                        <Label FontSize="16" Content="Time period: " Grid.Row="3" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label FontSize="16" x:Name="time_period_label"  Grid.Row="3" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
-
-                        <Label FontSize="16" Content="Function: " Grid.Row="4" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label FontSize="16" x:Name="function_label"  Grid.Row="4" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
-
-                        <Label FontSize="16" Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label FontSize="16" x:Name="last_refreshed_date_label"  Grid.Row="5" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
-
-                        <Label FontSize="16" Content="Interval view: " Grid.Row="6" Grid.Column="0"  Margin="0,2,0,2"/>
-                        <Label FontSize="16" x:Name="interval_view_label"  Grid.Row="6" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
-
-                        <Label FontSize="16" Content="Series type: " Grid.Row="7" Grid.Column="0" Margin="0,2,0,2" />
-                        <Label FontSize="16" x:Name="series_type_label"  Grid.Row="7" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
-
-                    </Grid>
-
-                </Border>
-            </StackPanel>
+            <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="2" Grid.ColumnSpan="2"/>
+            
+            <!--<StackPanel x:Name="DisplaySection" Width="348" >
+            </StackPanel>-->
         </StackPanel>
 
 
@@ -184,12 +140,12 @@
             </WrapPanel>
 
             <WrapPanel x:Name="barChartPanel" Background="#EEE2DC" Margin="2,2,2,2">
-                <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barCharData.columnSeriesCollection}" LegendLocation="Left"  Width="1100" Height="320">
+                <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barChartData.lineSeriesCollection}" Width="1100" Height="320">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Period" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Value" Labels="{Binding Path=barChartData.yAxisLabels}"></lvc:Axis>
+                        <lvc:Axis Title="Values" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
 
