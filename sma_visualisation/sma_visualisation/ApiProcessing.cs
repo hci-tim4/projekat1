@@ -7,7 +7,7 @@ namespace sma_visualisation
 {
     public class ApiProcessing
     {
-        public static Data loadAPI(string symbol, string interval, string time_period, string series_type, string in_the_past)
+        public static Data loadAPI(string symbol, string interval, string time_period, string series_type)
         {          
             string QUERY_URL = "https://www.alphavantage.co/query?function=SMA&symbol=" + symbol + "&interval=" + interval + "&time_period=" + time_period + "&series_type=" + series_type + "&apikey=EFYWRGACKQN6I4T3";
             Uri queryUri = new Uri(QUERY_URL);
@@ -96,8 +96,7 @@ namespace sma_visualisation
                     interval = interval_data, 
                     last_refreshed_date = last_refreshed_data, 
                     series_type = series_type_data, 
-                    time_period = time_period_data, 
-                    interval_view = in_the_past,
+                    time_period = time_period_data,
                     Values = sma_values };
                 return meta_data;
                 }

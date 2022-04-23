@@ -7,97 +7,105 @@
         mc:Ignorable="d"
         Title="SMA Values"
         Icon="\graphic.png"
-        Height="450" Width="800" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Visible">
-    <Grid Background="#EEE2DC">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
+        Height="450" Width="800" >
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        <Grid Background="#EEE2DC">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <WrapPanel x:Name="searchPanel">
-                <DatePicker SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="startDate_SelectedDateChanged" Text="SEEEEELEEECT"/>
+            <StackPanel  Grid.Column="0">
+                <Label FontWeight="Bold" Grid.Row="0" Content="Start and end date:"></Label>
+                <WrapPanel x:Name="searchPanel">
+                    <DatePicker SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" Grid.Row ="1" x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="startDate_SelectedDateChanged" Text="SEEEEELEEECT"/>
 
-                <DatePicker x:Name="endDate" DisplayDate="{Binding Path=endSelectedDate, Mode=TwoWay}" SelectedDateChanged="endDate_SelectedDateChanged"  Text="Until date"/>
-            </WrapPanel>
-            <WrapPanel>
-                <ComboBox x:Name="relOpValue" Grid.Row="3" Grid.Column="1" MinWidth="50"
+                    <DatePicker x:Name="endDate" DisplayDate="{Binding Path=endSelectedDate, Mode=TwoWay}" SelectedDateChanged="endDate_SelectedDateChanged"  Text="Until date"/>
+                </WrapPanel>
+                <Label FontWeight="Bold" Grid.Row="2" Content="Value:"></Label>
+                <WrapPanel>
+                    <ComboBox x:Name="relOpValue" Grid.Row="3" Grid.Column="1" MinWidth="50"
                           IsReadOnly="True" SelectedIndex="4" >
-                    <ComboBoxItem>&lt;</ComboBoxItem>
-                    <ComboBoxItem>&lt;=</ComboBoxItem>
-                    <ComboBoxItem>&gt;</ComboBoxItem>
-                    <ComboBoxItem>&gt;=</ComboBoxItem>
-                    <ComboBoxItem>==</ComboBoxItem>
-                </ComboBox>
+                        <ComboBoxItem>&lt;</ComboBoxItem>
+                        <ComboBoxItem>&lt;=</ComboBoxItem>
+                        <ComboBoxItem>&gt;</ComboBoxItem>
+                        <ComboBoxItem>&gt;=</ComboBoxItem>
+                        <ComboBoxItem>==</ComboBoxItem>
+                    </ComboBox>
 
-                <TextBox x:Name="valueTextBox" MinWidth="175" MaxWidth="200" />
+                    <TextBox x:Name="valueTextBox" MinWidth="175" MaxWidth="200" />
 
-            </WrapPanel>
-            <WrapPanel HorizontalAlignment="Center">
-            <Button x:Name="searchBtn" Background="#AC3B61" Content="Search" MinWidth="50" MaxWidth="100" HorizontalAlignment="Left" 
+                </WrapPanel>
+                <Label Grid.Row="3"></Label>
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button FontWeight="Bold" x:Name="searchBtn" Background="#AC3B61" Content="Search" MinWidth="50" MaxWidth="100" HorizontalAlignment="Left" 
                     Click="searchBtn_Click" Margin="0,0,20,0"></Button>
 
-            <Button x:Name="resetBtn" Background="#BAB2B5" Content="Reset" MinWidth="50" MaxWidth="150" HorizontalAlignment="Left" 
+                    <Button FontWeight="Bold" x:Name="resetBtn" Background="#BAB2B5" Content="Reset" MinWidth="50" MaxWidth="150" HorizontalAlignment="Left" 
                     Click="resetBtn_Click"></Button>
-            </WrapPanel>
-        </StackPanel>
+                </WrapPanel>
+                <Label Grid.Row="4"></Label>
+            </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" >
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" >
 
-            <WrapPanel>
-                <Label Content="Sort by:"></Label>
-                <ComboBox x:Name="sortBy" Grid.Row="3" Grid.Column="1" MinWidth="100" MaxWidth="200" HorizontalAlignment="Left"
+                <WrapPanel>
+                    <Label FontWeight="Bold" Content="Sort by:"></Label>
+                    <ComboBox x:Name="sortBy" Grid.Row="3" Grid.Column="1" MinWidth="100" MaxWidth="200" HorizontalAlignment="Left"
                               IsReadOnly="True" Text="Sort by" SelectionChanged="sortBy_SelectionChanged">
-                    <ComboBoxItem>Date</ComboBoxItem>
-                    <ComboBoxItem>Value</ComboBoxItem>
-                </ComboBox>
-            </WrapPanel>
-        </StackPanel>
+                        <ComboBoxItem>Date</ComboBoxItem>
+                        <ComboBoxItem>Value</ComboBoxItem>
+                    </ComboBox>
+                </WrapPanel>
+            </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
+            <StackPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
 
-        </StackPanel>
-        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+            </StackPanel>
+            <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
                    ItemsSource="{Binding Path=Values }"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                    IsReadOnly="True" Name="dataGrid"
                    Grid.Row="1" Grid.ColumnSpan="3" Background="#EEE2DC" CanUserSortColumns="False">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Date (yyyy.MM.dd HH:mm)" Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding Path=Value}"/>
-            </DataGrid.Columns>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date (yyyy.MM.dd HH:mm)" Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"/>
+                    <DataGridTextColumn Header="Value" Binding="{Binding Path=Value}"/>
+                </DataGrid.Columns>
 
-        </DataGrid>
-        <WrapPanel HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="3">
-            <Button Height="23" 
+            </DataGrid>
+            <Label Grid.Row="2" Grid.Column="1" FontWeight="Bold" Content="Number of views per page:" HorizontalContentAlignment="Right"></Label>
+            <WrapPanel HorizontalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="3">
+                <Button Height="23" 
                 Name="btnFirst" Width="40" 
                 Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75"/>
-            <Button Height="23" 
+                <Button Height="23" 
                 Name="btnPrev" Width="40" Click="btnPrev_Click" 
                 Opacity="0.75" Content="&lt;"/>
-            <Label x:Name="lblpageInformation"
+                <Label x:Name="lblpageInformation"
                 Height="30" Width="100" 
                 VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
-            <Button Height="23"
+                <Button Height="23"
                 Name="btnNext" Width="40" 
                 Content="&gt;" Click="btnNext_Click" Opacity="0.75"/>
-            <Button Height="23"  Width="40" Name="btnLast" 
-                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
-            <ComboBox x:Name="cbNumberOfRecords" Width="120"  SelectedIndex="0" Height="23"
+                <ComboBox x:Name="cbNumberOfRecords" Width="120"  SelectedIndex="0" Height="23"
                 SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75">
-                <ComboBoxItem>5</ComboBoxItem>
-                <ComboBoxItem>10</ComboBoxItem>
-                <ComboBoxItem>20</ComboBoxItem>
-                <ComboBoxItem>30</ComboBoxItem>
-            </ComboBox>
-        </WrapPanel>
+                    <ComboBoxItem>5</ComboBoxItem>
+                    <ComboBoxItem>10</ComboBoxItem>
+                    <ComboBoxItem>20</ComboBoxItem>
+                    <ComboBoxItem>30</ComboBoxItem>
+                </ComboBox>
+                <Button Height="22"  Width="40" x:Name="btnLast" 
+                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
+            </WrapPanel>
 
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Window>

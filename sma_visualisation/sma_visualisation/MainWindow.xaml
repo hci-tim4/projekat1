@@ -13,144 +13,143 @@
         Closing="Window_Closing"
         Title="SMA Visualization"
         Icon="/graphic.png">
-    <Grid x:Name="app" Background="#BAB2B5">
-
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        <Grid x:Name="app" Background="#BAB2B5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
 
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Margin="2,2,2,2">
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="8" Margin="2,2,2,2" >
-                <Border BorderBrush="#373737" BorderThickness="2" Height="250">
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Margin="2,2,2,2">
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="8" Margin="2,2,2,2" >
+                    <Border BorderBrush="#373737" BorderThickness="2" Height="250">
 
-                    <Grid Background="#EDC7B7" Margin="0,0,0,3" Width="400">
+                        <Grid Background="#EDC7B7" Margin="0,0,0,3" Width="400">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
 
 
-                        <Label FontSize="17" FontWeight="Bold" Grid.Row="0"  Grid.Column="0" Content="Symbol*:" Grid.ColumnSpan="2" Margin="2,2,2,2"/>
-                        <TextBox Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="4" x:Name="symbol_tb" FontSize="17" Margin="2,2,2,2"/>
 
-                        <Label FontSize="17" FontWeight="Bold" Margin="2,2,2,2" Content="Interval*:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-                        <ComboBox x:Name="interval_cb" Margin="2,2,2,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" FontSize="17" >
-                            <ComboBoxItem>1min</ComboBoxItem>
-                            <ComboBoxItem>5min</ComboBoxItem>
-                            <ComboBoxItem>15min</ComboBoxItem>
-                            <ComboBoxItem>30min</ComboBoxItem>
-                            <ComboBoxItem>60min</ComboBoxItem>
-                            <ComboBoxItem>daily</ComboBoxItem>
-                            <ComboBoxItem>weekly</ComboBoxItem>
-                            <ComboBoxItem>monthly</ComboBoxItem>
-                        </ComboBox>
 
-                        <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="Time period*:" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
-                        <DockPanel Margin="2,2,2,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" >
-                            <TextBox  FontSize="17" Width="35" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
-                            <Slider Height="20" x:Name="timePeriodSlider" Minimum="10" Maximum="200" ></Slider>
+                            <Label FontSize="17" FontWeight="Bold" Grid.Row="0"  Grid.Column="0" Content="Symbol*:" Grid.ColumnSpan="2" Margin="2,2,2,2"/>
+                            <TextBox Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="4" x:Name="symbol_tb" FontSize="17" Margin="2,2,2,2"/>
 
-                        </DockPanel>
+                            <Label FontSize="17" FontWeight="Bold" Margin="2,2,2,2" Content="Interval*:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                            <ComboBox x:Name="interval_cb" Margin="2,2,2,2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" FontSize="17" >
+                                <ComboBoxItem>1min</ComboBoxItem>
+                                <ComboBoxItem>5min</ComboBoxItem>
+                                <ComboBoxItem>15min</ComboBoxItem>
+                                <ComboBoxItem>30min</ComboBoxItem>
+                                <ComboBoxItem>60min</ComboBoxItem>
+                                <ComboBoxItem>daily</ComboBoxItem>
+                                <ComboBoxItem>weekly</ComboBoxItem>
+                                <ComboBoxItem>monthly</ComboBoxItem>
+                            </ComboBox>
 
-                        <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="Series type*:" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0"/>
-                        <ComboBox Margin="2,2,2,2" x:Name="series_type_cb" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4"  FontSize="17">
-                            <ComboBoxItem>close</ComboBoxItem>
-                            <ComboBoxItem>open</ComboBoxItem>
-                            <ComboBoxItem>high</ComboBoxItem>
-                            <ComboBoxItem>low</ComboBoxItem>
-                        </ComboBox>
+                            <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="Time period*:" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+                            <DockPanel Margin="2,2,2,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" >
+                                <TextBox  FontSize="17" Width="35" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
+                                <Slider Height="20" x:Name="timePeriodSlider" Minimum="10" Maximum="200" ></Slider>
 
-                        <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="In the past*:" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"/>
-                        <ComboBox Margin="2,2,2,2" x:Name="interval_view_cb" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4"  FontSize="17">
-                            <ComboBoxItem>one year</ComboBoxItem>
-                            <ComboBoxItem>two years</ComboBoxItem>
-                            <ComboBoxItem>three years</ComboBoxItem>
-                            <ComboBoxItem>all</ComboBoxItem>
-                        </ComboBox>
+                            </DockPanel>
 
-                        <Button Margin="10,10,10,10" FontWeight="Bold" FontSize="18" Width ="130" Click="show_btn_Click" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Background="#AC3B61" x:Name="show_btn" Content="Show" Grid.RowSpan="5"/>
-                        
-                    </Grid>
-                </Border>
+                            <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="Series type*:" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0"/>
+                            <ComboBox Margin="2,2,2,2" x:Name="series_type_cb" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4"  FontSize="17">
+                                <ComboBoxItem>close</ComboBoxItem>
+                                <ComboBoxItem>open</ComboBoxItem>
+                                <ComboBoxItem>high</ComboBoxItem>
+                                <ComboBoxItem>low</ComboBoxItem>
+                            </ComboBox>
+
+                            <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="In the past*:" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"/>
+                            <ComboBox Margin="2,2,2,2" x:Name="interval_view_cb" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4"  FontSize="17">
+                                <ComboBoxItem>one year</ComboBoxItem>
+                                <ComboBoxItem>two years</ComboBoxItem>
+                                <ComboBoxItem>three years</ComboBoxItem>
+                                <ComboBoxItem>all</ComboBoxItem>
+                            </ComboBox>
+
+                            <Button Margin="10,10,10,10" FontWeight="Bold" FontSize="18" Width ="120" Click="show_btn_Click" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Background="#AC3B61" x:Name="show_btn" Content="Show" Grid.RowSpan="5"/>
+                            <Button Width="130"  FontSize="18" Click="show_table_Click" FontWeight="Bold" Background="#AC3B61" x:Name="show_table_btn" Content="Show Table" Grid.Row ="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="86,0,7,8" Grid.RowSpan="4"/>
+
+                        </Grid>
+                    </Border>
+
+                </StackPanel>
+
+
+                <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="2" Grid.ColumnSpan="2"/>
 
             </StackPanel>
 
 
-            <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="2" Grid.ColumnSpan="2"/>
-            
-        </StackPanel>
+            <StackPanel  >
+            </StackPanel>
 
+            <StackPanel Grid.Row="0" Grid.Column="3" >
+                <WrapPanel HorizontalAlignment="Right">
+                </WrapPanel>
+                <WrapPanel Background="#EEE2DC" Margin="2,2,2,2">
+                    <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.lineSeriesCollection}" Width="1100" Height="320" Margin="2,2,2,2">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Value" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Date (dd.mm.yyyy.)" Labels="{Binding Path=lineChartData.xAxisLabels}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </WrapPanel>
 
-        <StackPanel  >
-        </StackPanel>
-
-        <StackPanel Grid.Row="0" Grid.Column="3" >
-            <WrapPanel HorizontalAlignment="Right">
-                <Button MinWidth="150"  FontSize="20" Click="show_table_Click" FontWeight="Bold" Background="#AC3B61" x:Name="show_table_btn" Content="Show Table" Grid.RowSpan="2"/>
-                
-            </WrapPanel>
-            <WrapPanel Background="#EEE2DC" Margin="2,2,2,2">
-                <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.lineSeriesCollection}" Width="1100" Height="320" Margin="2,2,2,2">
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Value" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Date (dd.mm.yyyy.)" Labels="{Binding Path=lineChartData.xAxisLabels}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                </lvc:CartesianChart>
-            </WrapPanel>
-
-            <WrapPanel x:Name="barChartPanel" Background="#EEE2DC" Margin="2,2,2,2">
-                <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barChartData.lineSeriesCollection}" Width="1100" Height="320">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Period" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Values" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
+                <WrapPanel x:Name="barChartPanel" Background="#EEE2DC" Margin="2,2,2,2">
+                    <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barChartData.lineSeriesCollection}" Width="1100" Height="320">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Period" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Values" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
 
 
 
-            </WrapPanel>
-        </StackPanel>
-
-    </Grid>
+                </WrapPanel>
+            </StackPanel>
+        </Grid>
+        </ScrollViewer>
 </Window>

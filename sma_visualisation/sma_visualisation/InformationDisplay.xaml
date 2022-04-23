@@ -11,7 +11,7 @@
     <Grid>
 
         <StackPanel  >
-            <Border BorderBrush="#373737" BorderThickness="2" Width="346" Background="#EEE2DC">
+            <Border BorderBrush="#373737" BorderThickness="2" Width="428" Background="#EEE2DC">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="63*"/>
@@ -44,8 +44,8 @@
                 <Label FontSize="16" Content="Function: " Grid.Row="4" Grid.Column="0" Margin="0,2,0,2" />
                     <Label FontSize="16" x:Name="function_label" Content="{Binding Path=function}" Grid.Row="4" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                <Label FontSize="16" Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
-                    <Label FontSize="16" x:Name="last_refreshed_date_label" Content="{Binding Path=last_refreshed_date}" Grid.Row="5" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
+                <Label FontSize="13" Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
+                    <Label FontSize="16" x:Name="last_refreshed_date_label" Content="{Binding Path=last_refreshed_date}" Grid.Row="5" Margin="122,2,0,2" Grid.Column="0" Grid.ColumnSpan="2"/>
 
                 <Label FontSize="16" Content="Interval view: " Grid.Row="6" Grid.Column="0"  Margin="0,2,0,2"/>
                     <Label FontSize="16" x:Name="interval_view_label" Content="{Binding Path=interval_view}" Grid.Row="6" Margin="122,2,0,2" Grid.ColumnSpan="2"/>

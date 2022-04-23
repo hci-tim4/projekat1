@@ -27,9 +27,11 @@ namespace sma_visualisation
     public partial class MainWindow : Window
     {
         List<Window> openedWindows = new List<Window>();
+        List<string> hasToBeAdded = new List<string>();
         Data currentData;
         public LineChartData lineChartData { get; set; }
         public LineChartData barChartData { get; set; }
+       
         public MainWindow()
         {
             InitializeComponent();
@@ -43,39 +45,84 @@ namespace sma_visualisation
             lineChart.DataContext = this;
             barChartData = new LineChartData();
             barChartPanel.DataContext = this;
-
             Formatter = value => value.ToString("N");
         }
 
-        private void show_btn_Click(object sender, RoutedEventArgs e)
+        private string read_interval_cb()
         {
-            List<string> hasToBeAdded = new List<string>();
-            string interval = "";
-            string series_type = "";
             if (!ValidationEntry.validateComboBox(interval_cb))
             {
                 hasToBeAdded.Add("interval");
             }
+            ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
+            string interval = icbi.Content.ToString();
+            return interval;
+        }
 
-
-            //tekst box i slider provera?? - ne treba uvek > 10
-            int time_period = (int)timePeriodSlider.Value;
+        private string read_series_type_cb()
+        {
+            
             if (!ValidationEntry.validateComboBox(series_type_cb))
             {
                 hasToBeAdded.Add("period");
             }
+            ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
+            string series_type = cbi.Content.ToString();
+            return series_type;
+        }
 
-            if (!ValidationEntry.emptyTextBox(symbol_tb))
-            {
-                hasToBeAdded.Add("simbol");
-                //symbol_validate_label.Content = "Unesite simbol!"; //PROVERIITI!!
-
-            }
-
+        private string read_interval_view_cb()
+        {
+            
             if (!ValidationEntry.validateComboBox(interval_view_cb))
             {
                 hasToBeAdded.Add("interval of years");
             }
+            string interval_view = ((System.Windows.Controls.ComboBoxItem)interval_view_cb.SelectedItem).Content as string;
+            return interval_view;
+        }
+
+        private string read_symbol_tb()
+        {
+            if (!ValidationEntry.emptyTextBox(symbol_tb))
+            {
+                hasToBeAdded.Add("simbol");
+            }
+            string symbol = symbol_tb.Text;
+            return symbol;
+        }
+
+        private string return_interval_view_days(string interval_view)
+        {
+            string interval_view_days = "all";
+
+            if (interval_view == "one year")
+            {
+                interval_view_days = "366";
+            }
+            else if (interval_view == "two years")
+            {
+                interval_view_days = "732";
+            }
+            else if (interval_view == "three years")
+            {
+                interval_view_days = "1098";
+            }
+            return interval_view_days;
+        }
+
+        private int read_time_period_value()
+        {
+            return (int)timePeriodSlider.Value; 
+        }
+        private void show_btn_Click(object sender, RoutedEventArgs e)
+        {
+            string symbol = read_symbol_tb();
+            int time_period = read_time_period_value();
+            string series_type = read_series_type_cb();
+            string interval = read_interval_cb();
+            string interval_view = read_interval_view_cb();
+            string interval_view_days = return_interval_view_days(interval_view);
 
             if (hasToBeAdded.Count != 0)
             {
@@ -96,39 +143,18 @@ namespace sma_visualisation
                 return;
             }
 
-            ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
-            interval = icbi.Content.ToString();
-            ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
-            series_type = cbi.Content.ToString();
-
-            string symbol = symbol_tb.Text;
-
-            string interval_view = ((System.Windows.Controls.ComboBoxItem)interval_view_cb.SelectedItem).Content as string;
-            string interval_view_days = "all";
-
-            if (interval_view == "one year")
-            {
-                interval_view_days = "366";
-            }
-            else if (interval_view == "two years")
-            {
-                interval_view_days = "732";
-            }
-            else if (interval_view == "three years")
-            {
-                interval_view_days = "1098";
-            }
-            InformationBox ibox = new InformationBox();
+           
+          
+            
+            Window ibox = new InformationBox();
             try
             {
                 ibox.Show();
-                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view);
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
                 currentData = loaded_data;
-                if (interval_view_days == "all")
+                if (interval_view_days != "all")
                 {
-                }
-                else
-                {
+
                     Data filtered_data = filter_data(loaded_data, interval_view_days);
                     currentData = filtered_data;
                 }
@@ -149,16 +175,13 @@ namespace sma_visualisation
             {
                 ibox.Close();
             }
-
         }
         public Func<double, string> Formatter { get; set; }
 
-       
-    
 
         private void PrepareGraph()
         {
-   
+
             lineChartData.reset();
             barChartData.reset();
 
@@ -207,7 +230,7 @@ namespace sma_visualisation
         {
             List<DateTime> dates = (from allValues in currentData.Values
                                     select allValues.Date).ToList();
-            
+
             ChartValues<double> values = new ChartValues<double>();
 
             if (currentData.Values.Count < 100)
@@ -241,7 +264,7 @@ namespace sma_visualisation
                 for (; minDate < maxDate; minDate = minDate.AddMonths(1))
                 {
                     List<double> valuesInMonth = (from allValues in currentData.Values
-                                                 where allValues.Date.Year == minDate.Year && allValues.Date.Month == minDate.Month
+                                                  where allValues.Date.Year == minDate.Year && allValues.Date.Month == minDate.Month
                                                   select allValues.Value).ToList();
                     double avgValue = valuesInMonth.Count > 0 ? valuesInMonth.Average() : 0.0;
                     values.Add(avgValue);
@@ -253,6 +276,7 @@ namespace sma_visualisation
 
             return values;
         }
+
 
         private Data filter_data(Data loaded_data, string interval_view_days)
         {
@@ -273,19 +297,65 @@ namespace sma_visualisation
 
         private void show_table_Click(object sender, RoutedEventArgs e)
         {
-            if (currentData == null)
+            string symbol = read_symbol_tb();
+            int time_period = read_time_period_value();
+            string series_type = read_series_type_cb();
+            string interval = read_interval_cb();
+            string interval_view = read_interval_view_cb();
+            string interval_view_days = return_interval_view_days(interval_view);
+
+            if (hasToBeAdded.Count != 0)
             {
-                MessageBox.Show("There has to be selected values");
+                string notify = "You have to give the following parameters: ";
+                foreach (string str in hasToBeAdded)
+                {
+                    notify = notify + str;
+                    if (str != hasToBeAdded[hasToBeAdded.Count - 1])
+                    {
+                        notify = notify + " ,";
+                    }
+                    else
+                    {
+                        notify = notify + "!";
+                    }
+                }
+                MessageBox.Show(notify);
                 return;
             }
-            if (currentData.Values.Count == 0)
+           
+            try
             {
-                MessageBox.Show("There are no reults for the chosen data");
-                return;
+                
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
+                currentData = loaded_data;
+                if (interval_view_days != "all")
+                {
+
+                    Data filtered_data = filter_data(loaded_data, interval_view_days);
+                    currentData = filtered_data;
+                }
+                if (currentData == null)
+                {
+                    MessageBox.Show("There has to be selected values");
+                    return;
+                }
+                if (currentData.Values.Count == 0)
+                {
+                    MessageBox.Show("There are no reults for the chosen data");
+                    return;
+                }
+                Window tableWindow = new SmaTableWindow(currentData);
+                openedWindows.Add(tableWindow);
+                tableWindow.Show();
             }
-            Window tableWindow = new SmaTableWindow(currentData);
-            openedWindows.Add(tableWindow);
-            tableWindow.Show();
+            catch(NoDataException exeption)
+            {
+                MessageBox.Show(exeption.message);
+            }
+            catch(InvalidApiCallException exception)
+            {
+                MessageBox.Show(exception.message);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
