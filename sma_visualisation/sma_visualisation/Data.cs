@@ -14,7 +14,7 @@ namespace sma_visualisation
         public string interval { get; set; } = "close";
         public int time_period { get; set; } = 350;
         public string series_type { get; set; } = "open";
-        public string interval_view { get; set; } = "month"; //jos ne znamo sta je, 1 gdoina, 2 godine 
+        public string interval_view { get; set; } = "all"; 
         public List<SMAValue> Values { get; set; }
 
 

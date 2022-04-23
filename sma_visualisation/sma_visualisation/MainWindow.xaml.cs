@@ -58,7 +58,7 @@ namespace sma_visualisation
             }
 
 
-            //tekst box i slider provera??
+            //tekst box i slider provera?? - ne treba uvek > 10
             int time_period = (int)timePeriodSlider.Value;
             if (!ValidationEntry.validateComboBox(series_type_cb))
             {
@@ -122,7 +122,7 @@ namespace sma_visualisation
             try
             {
                 ibox.Show();
-                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view);
                 currentData = loaded_data;
                 if (interval_view_days == "all")
                 {
@@ -163,17 +163,17 @@ namespace sma_visualisation
             barChartData.reset();
 
             ChartValues<double> values = new ChartValues<double>();
-            ChartValues<double> barChartValues = new ChartValues<double>();
+            //ChartValues<double> barChartValues = new ChartValues<double>();
 
             foreach (SMAValue sma in currentData.Values)
             {
                 values.Add(sma.Value);
-                barChartValues.Add(sma.Value);
+                //barChartValues.Add(sma.Value);
                 lineChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
                 lineChartData.yAxisLabels.Add(sma.Value.ToString());
 
-                barChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
-                barChartData.yAxisLabels.Add(sma.Value.ToString());
+                //barChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
+                //barChartData.yAxisLabels.Add(sma.Value.ToString());
 
             }
 
@@ -184,6 +184,8 @@ namespace sma_visualisation
                 PointGeometry = DefaultGeometries.Diamond,
                 PointGeometrySize = 8,
             });
+
+            ChartValues<double> barChartValues = prepareValuesForBarChart();
 
             barChartData.lineSeriesCollection.Add(new ColumnSeries()
             {
@@ -201,6 +203,56 @@ namespace sma_visualisation
 
         }
 
+        private ChartValues<double> prepareValuesForBarChart()
+        {
+            List<DateTime> dates = (from allValues in currentData.Values
+                                    select allValues.Date).ToList();
+            
+            ChartValues<double> values = new ChartValues<double>();
+
+            if (currentData.Values.Count < 100)
+            {
+                foreach (SMAValue sma in currentData.Values)
+                {
+                    values.Add(sma.Value);
+                    barChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
+                }
+            }
+            else if (currentData.interval_view == "all")
+            {
+                DateTime minDate = dates.OrderBy(v => v.Date).First().Date;
+                DateTime maxDate = dates.OrderBy(v => v.Date).Last().Date;
+                for (; minDate < maxDate; minDate = minDate.AddYears(1))
+                {
+                    List<double> valuesInYear = (from allValues in currentData.Values
+                                                 where allValues.Date.Year == minDate.Year
+                                                 select allValues.Value).ToList();
+                    double avgValue = valuesInYear.Count > 0 ? valuesInYear.Average() : 0.0;
+                    values.Add(avgValue);
+                    barChartData.xAxisLabels.Add(minDate.ToString("yyyy."));
+                }
+                //grupisi po godinama
+                //lineChartData.xAxisLabels.Add(); // ubaci godine
+            }
+            else
+            {
+                DateTime minDate = dates.OrderBy(v => v.Date).First().Date;
+                DateTime maxDate = dates.OrderBy(v => v.Date).Last().Date;
+                for (; minDate < maxDate; minDate = minDate.AddMonths(1))
+                {
+                    List<double> valuesInMonth = (from allValues in currentData.Values
+                                                 where allValues.Date.Year == minDate.Year && allValues.Date.Month == minDate.Month
+                                                  select allValues.Value).ToList();
+                    double avgValue = valuesInMonth.Count > 0 ? valuesInMonth.Average() : 0.0;
+                    values.Add(avgValue);
+                    barChartData.xAxisLabels.Add(minDate.ToString("mm.yyyy."));
+                }
+                //grupisi po mesecima
+                //lineChartData.xAxisLabels.Add(); // ubaci mesece
+            }
+
+            return values;
+        }
 
         private Data filter_data(Data loaded_data, string interval_view_days)
         {

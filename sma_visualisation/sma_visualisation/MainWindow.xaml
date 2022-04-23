@@ -85,7 +85,7 @@
                         <Label Margin="2,2,2,2" FontSize="17" FontWeight="Bold" Content="Time period*:" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
                         <DockPanel Margin="2,2,2,2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" >
                             <TextBox  FontSize="17" Width="35" Text="{Binding ElementName=timePeriodSlider, Path=Value, Mode =TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={local:IntToStringConverter}}"></TextBox>
-                            <Slider Height="20" x:Name="timePeriodSlider" Minimum="1" Maximum="200" ></Slider>
+                            <Slider Height="20" x:Name="timePeriodSlider" Minimum="10" Maximum="200" ></Slider>
 
                         </DockPanel>
 
@@ -115,8 +115,6 @@
 
             <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="2" Grid.ColumnSpan="2"/>
             
-            <!--<StackPanel x:Name="DisplaySection" Width="348" >
-            </StackPanel>-->
         </StackPanel>
 
 
@@ -131,7 +129,7 @@
             <WrapPanel Background="#EEE2DC" Margin="2,2,2,2">
                 <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.lineSeriesCollection}" Width="1100" Height="320" Margin="2,2,2,2">
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Value" Labels="{Binding Path=lineChartData.yAxisLabels}"></lvc:Axis>
+                        <lvc:Axis Title="Value" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Date (dd.mm.yyyy.)" Labels="{Binding Path=lineChartData.xAxisLabels}"></lvc:Axis>
