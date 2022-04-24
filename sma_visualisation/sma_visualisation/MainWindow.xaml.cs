@@ -53,6 +53,7 @@ namespace sma_visualisation
             if (!ValidationEntry.validateComboBox(interval_cb))
             {
                 hasToBeAdded.Add("interval");
+                return "";
             }
             ComboBoxItem icbi = (ComboBoxItem)interval_cb.SelectedItem;
             string interval = icbi.Content.ToString();
@@ -65,6 +66,7 @@ namespace sma_visualisation
             if (!ValidationEntry.validateComboBox(series_type_cb))
             {
                 hasToBeAdded.Add("period");
+                return "";
             }
             ComboBoxItem cbi = (ComboBoxItem)series_type_cb.SelectedItem;
             string series_type = cbi.Content.ToString();
@@ -77,6 +79,7 @@ namespace sma_visualisation
             if (!ValidationEntry.validateComboBox(interval_view_cb))
             {
                 hasToBeAdded.Add("interval of years");
+                return "";
             }
             string interval_view = ((System.Windows.Controls.ComboBoxItem)interval_view_cb.SelectedItem).Content as string;
             return interval_view;
@@ -87,6 +90,7 @@ namespace sma_visualisation
             if (!ValidationEntry.emptyTextBox(symbol_tb))
             {
                 hasToBeAdded.Add("simbol");
+                return "";
             }
             string symbol = symbol_tb.Text;
             return symbol;
@@ -117,6 +121,8 @@ namespace sma_visualisation
         }
         private void show_btn_Click(object sender, RoutedEventArgs e)
         {
+            if (hasToBeAdded.Count != 0)
+                hasToBeAdded.Clear();
             string symbol = read_symbol_tb();
             int time_period = read_time_period_value();
             string series_type = read_series_type_cb();
@@ -150,7 +156,7 @@ namespace sma_visualisation
             try
             {
                 ibox.Show();
-                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view_days);
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view);
                 currentData = loaded_data;
                 if (interval_view_days != "all")
                 {
@@ -271,9 +277,9 @@ namespace sma_visualisation
                                                   select allValues.Value).ToList();
                     double avgValue = valuesInMonth.Count > 0 ? valuesInMonth.Average() : 0.0;
                     values.Add(avgValue);
-                    barChartData.xAxisLabels.Add(minDate.ToString("MM.yyyy."));
+                    barChartData.xAxisLabels.Add(minDate.ToString("MMM yyyy."));
                 }
-                barChartX.Title = "Period (MM. yyyy.)";
+                barChartX.Title = "Period (MMM yyyy.)";
                 //grupisi po mesecima
                 //lineChartData.xAxisLabels.Add(); // ubaci mesece
             }
@@ -330,7 +336,7 @@ namespace sma_visualisation
             try
             {
                 
-                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view_days);
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view);
                 currentData = loaded_data;
                 if (interval_view_days != "all")
                 {

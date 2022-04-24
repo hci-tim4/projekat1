@@ -373,7 +373,7 @@ namespace sma_visualisation
             msg = msg + "\n Interval: " + originalData.interval;
             msg = msg + "\n Time period: " + originalData.time_period;
             msg = msg + "\n Function: " + originalData.function;
-            msg = msg + "\n Last refreshed: " + originalData.last_refreshed_date;
+            msg = msg + "\n Last refreshed: " + originalData.last_refreshed_date.ToString("dd.MM.yyyy. HH:mm");
             msg = msg + "\n In the past: " + originalData.interval_view;
             msg = msg + "\n Series type: " + originalData.series_type;
             MessageBox.Show(msg, "Current data:");

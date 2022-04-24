@@ -26,7 +26,7 @@ namespace sma_visualisation
                 }
                 if (json_data.Count == 0)
                 {
-                    throw new NoDataException( "No data for this enter.");
+                    throw new NoDataException( "No data for this entry.");
                    
                     
                 }
