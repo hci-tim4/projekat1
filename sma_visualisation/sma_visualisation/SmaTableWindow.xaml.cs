@@ -368,7 +368,7 @@ namespace sma_visualisation
 
         private void currentDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            string msg = "Current data:";
+            string msg = "";
             msg = msg + "\n Symbol: " + originalData.symbol;
             msg = msg + "\n Interval: " + originalData.interval;
             msg = msg + "\n Time period: " + originalData.time_period;
@@ -376,7 +376,7 @@ namespace sma_visualisation
             msg = msg + "\n Last refreshed: " + originalData.last_refreshed_date.ToString("dd.MM.yyyy. HH:mm");
             msg = msg + "\n In the past: " + originalData.interval_view;
             msg = msg + "\n Series type: " + originalData.series_type;
-            MessageBox.Show(msg, "Current data:");
+            MessageBox.Show(msg, "Current data");
 
         }
     }

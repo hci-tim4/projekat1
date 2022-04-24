@@ -46,18 +46,16 @@ namespace sma_visualisation
                 Console.WriteLine(data);
                 string[] data_lines = data.Split(",");
                 string symbol_data = data_lines[0].Split(":")[2];
-                symbol_data = symbol_data.Replace("\"", "");
+                symbol_data = symbol_data.Replace("\"", "").Trim();
                 string function_data = data_lines[1].Split(":")[2];
-                function_data = function_data.Replace("\"", "");
-
-
+                function_data = function_data.Replace("\"", "").Trim();
                 string interval_data = data_lines[3].Split(":")[2];
                 interval_data = interval_data.Replace("\"", "").Trim();
                 int  time_period_data = int.Parse(data_lines[4].Split(":")[2].Replace("\"", ""));
                 string series_type_data = data_lines[5].Split(":")[2];
-                series_type_data = series_type_data.Replace("\"", "");
+                series_type_data = series_type_data.Replace("\"", "").Trim();
                 string time_zone_data = data_lines[6].Split(":")[2];
-                time_zone_data = time_zone_data.Replace("\"", "");
+                time_zone_data = time_zone_data.Replace("\"", "").Trim();
                 List<SMAValue> sma_values = new List<SMAValue>();
                 //Values
                 //if (json_data.ContainsKey("Meta Data")) { Values = json_data.GetValue("Technical Analysis: SMA").ToString(); }

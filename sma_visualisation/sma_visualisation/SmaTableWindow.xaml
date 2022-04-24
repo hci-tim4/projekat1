@@ -43,6 +43,9 @@
                     </ComboBox>
 
                     <TextBox x:Name="valueTextBox" MinWidth="175" MaxWidth="200" />
+                    <Separator Width="100" Background="Transparent"/>
+                    <Button FontWeight="Bold" x:Name="currentDataBtn" Background="#BAB2B5" Content="Current choices" MinWidth="50" MaxWidth="150" 
+                    Click="currentDataBtn_Click" HorizontalAlignment="Right"></Button>
 
                 </WrapPanel>
                 <Label Grid.Row="3"></Label>
@@ -69,8 +72,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-                <Button FontWeight="Bold" x:Name="currentDataBtn" Background="#BAB2B5" Content="Current data" MinWidth="50" MaxWidth="150" 
-                    Click="currentDataBtn_Click" HorizontalAlignment="Right"></Button>
+                
             </StackPanel>
             <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
                    ItemsSource="{Binding Path=Values }"
