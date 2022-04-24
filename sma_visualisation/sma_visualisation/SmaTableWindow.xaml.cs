@@ -194,7 +194,6 @@ namespace sma_visualisation
                 case (int)PagingMode.PageCountChange:
                     pageIndex = 1;
                     numberOfRecPerPage = Convert.ToInt32(((System.Windows.Controls.ComboBoxItem)cbNumberOfRecords.SelectedItem).Content as string);
-                    //cbNumberOfRecords.SelectedItem);
                     dataGrid.ItemsSource = null;
                     try
                     {
@@ -237,7 +236,6 @@ namespace sma_visualisation
             catch (Exception)
             {
                 dataGrid.ItemsSource = currentData.Values;
-                //nije toliko dugo kao range
             }
             refreshPagination();
         }
@@ -368,5 +366,18 @@ namespace sma_visualisation
             refreshPagination();
         }
 
+        private void currentDataBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string msg = "Current data:";
+            msg = msg + "\n Symbol: " + originalData.symbol;
+            msg = msg + "\n Interval: " + originalData.interval;
+            msg = msg + "\n Time period: " + originalData.time_period;
+            msg = msg + "\n Function: " + originalData.function;
+            msg = msg + "\n Last refreshed: " + originalData.last_refreshed_date;
+            msg = msg + "\n In the past: " + originalData.interval_view;
+            msg = msg + "\n Series type: " + originalData.series_type;
+            MessageBox.Show(msg, "Current data:");
+
+        }
     }
 }

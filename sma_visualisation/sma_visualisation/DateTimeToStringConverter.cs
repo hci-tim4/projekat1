@@ -14,13 +14,13 @@ namespace sma_visualisation
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             DateTime v = (DateTime)value;
-            return v.ToString("yyyy.MM.dd HH:mm");
+            return v.ToString("dd.MM.yyyy HH:mm");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string v = value as string;
-            DateTime ret = DateTime.ParseExact(v, "yyyy.MM.dd HH:mm", CultureInfo.InvariantCulture);
+            DateTime ret = DateTime.ParseExact(v, "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
             if (ret != null)
             {
                 return ret;

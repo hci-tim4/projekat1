@@ -14,8 +14,8 @@
             <Border BorderBrush="#373737" BorderThickness="2" Width="428" Background="#EEE2DC">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="63*"/>
-                    <ColumnDefinition Width="113*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" MinHeight="26"/>
@@ -30,7 +30,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label FontWeight="Bold" FontSize="16" Content="The lateast selected choices" HorizontalAlignment="Left" Grid.Row="0" Grid.ColumnSpan="2" Margin="98,0,0,0" Width="156" />
+                <Label FontWeight="Bold" FontSize="16" Content="The latest selected choices" HorizontalAlignment="Left" Grid.Row="0" Grid.ColumnSpan="2" Margin="98,0,0,0" />
 
                 <Label FontSize="16" Content="Symbol: " Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" />
                 <Label FontSize="16" x:Name="symbol_label" Content="{Binding Path=symbol}" Grid.Row="1" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
@@ -44,7 +44,7 @@
                 <Label FontSize="16" Content="Function: " Grid.Row="4" Grid.Column="0" Margin="0,2,0,2" />
                     <Label FontSize="16" x:Name="function_label" Content="{Binding Path=function}" Grid.Row="4" Margin="122,2,0,2" Grid.ColumnSpan="2"/>
 
-                <Label FontSize="13" Content="Last refreshed date: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
+                <Label FontSize="16" Content="Last refreshed: " Grid.Row="5" Grid.Column="0" Margin="0,2,0,2" />
                     <Label FontSize="16" x:Name="last_refreshed_date_label" Content="{Binding Path=last_refreshed_date}" Grid.Row="5" Margin="122,2,0,2" Grid.Column="0" Grid.ColumnSpan="2"/>
 
                 <Label FontSize="16" Content="Interval view: " Grid.Row="6" Grid.Column="0"  Margin="0,2,0,2"/>

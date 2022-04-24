@@ -28,9 +28,9 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Margin="2,2,2,2">
                 <StackPanel Grid.Row="0" Grid.ColumnSpan="8" Margin="2,2,2,2" >
-                    <Border BorderBrush="#373737" BorderThickness="2" Height="250">
+                    <Border BorderBrush="#373737" BorderThickness="2" Height="250" Background="#EDC7B7">
 
-                        <Grid Background="#EDC7B7" Margin="0,0,0,3" Width="400">
+                        <Grid  Margin="0,0,0,3" Width="400">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -139,7 +139,7 @@
                 <WrapPanel x:Name="barChartPanel" Background="#EEE2DC" Margin="2,2,2,2">
                     <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barChartData.lineSeriesCollection}" Width="1100" Height="320">
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Title="Period" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
+                            <lvc:Axis x:Name="barChartX" Title="Period" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Values" LabelFormatter="{Binding Formatter}"></lvc:Axis>

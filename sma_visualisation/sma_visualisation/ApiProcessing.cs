@@ -8,7 +8,7 @@ namespace sma_visualisation
 {
     public class ApiProcessing
     {
-        public static Data loadAPI(string symbol, string interval, string time_period, string series_type)
+        public static Data loadAPI(string symbol, string interval, string time_period, string series_type, string interval_view)
         {          
             string QUERY_URL = "https://www.alphavantage.co/query?function=SMA&symbol=" + symbol + "&interval=" + interval + "&time_period=" + time_period + "&series_type=" + series_type + "&apikey=EFYWRGACKQN6I4T3";
             Uri queryUri = new Uri(QUERY_URL);
@@ -16,8 +16,14 @@ namespace sma_visualisation
 
             using (WebClient client = new WebClient())
             {
-
-                dynamic json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                dynamic json_data;
+                try
+                {
+                    json_data = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(client.DownloadString(queryUri));
+                }catch(Exception e)
+                {
+                    throw new NoConnectionException("There is not internet connection. Please check your connection");
+                }
                 if (json_data.Count == 0)
                 {
                     throw new NoDataException( "No data for this enter.");
@@ -98,6 +104,7 @@ namespace sma_visualisation
                     last_refreshed_date = last_refreshed_data, 
                     series_type = series_type_data, 
                     time_period = time_period_data,
+                    interval_view = interval_view,
                     Values = sma_values };
                 return meta_data;
                 }

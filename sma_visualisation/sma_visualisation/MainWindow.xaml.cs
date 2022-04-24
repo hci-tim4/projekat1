@@ -150,7 +150,7 @@ namespace sma_visualisation
             try
             {
                 ibox.Show();
-                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view_days);
                 currentData = loaded_data;
                 if (interval_view_days != "all")
                 {
@@ -171,6 +171,10 @@ namespace sma_visualisation
             {
                 MessageBox.Show(exception.message);
             }
+            catch (NoConnectionException noConnection)
+            {
+                MessageBox.Show(noConnection.message);
+            }
             finally
             {
                 ibox.Close();
@@ -186,17 +190,13 @@ namespace sma_visualisation
             barChartData.reset();
 
             ChartValues<double> values = new ChartValues<double>();
-            //ChartValues<double> barChartValues = new ChartValues<double>();
 
             foreach (SMAValue sma in currentData.Values)
             {
                 values.Add(sma.Value);
-                //barChartValues.Add(sma.Value);
                 lineChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
                 lineChartData.yAxisLabels.Add(sma.Value.ToString());
 
-                //barChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
-                //barChartData.yAxisLabels.Add(sma.Value.ToString());
 
             }
 
@@ -229,6 +229,7 @@ namespace sma_visualisation
         private ChartValues<double> prepareValuesForBarChart()
         {
             List<DateTime> dates = (from allValues in currentData.Values
+                                    orderby allValues.Date
                                     select allValues.Date).ToList();
 
             ChartValues<double> values = new ChartValues<double>();
@@ -240,11 +241,12 @@ namespace sma_visualisation
                     values.Add(sma.Value);
                     barChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
                 }
+                barChartX.Title = "Period (dd. MM. yyyy.)";
             }
             else if (currentData.interval_view == "all")
             {
-                DateTime minDate = dates.OrderBy(v => v.Date).First().Date;
-                DateTime maxDate = dates.OrderBy(v => v.Date).Last().Date;
+                DateTime minDate = dates.First().Date;
+                DateTime maxDate = dates.Last().Date;
                 for (; minDate < maxDate; minDate = minDate.AddYears(1))
                 {
                     List<double> valuesInYear = (from allValues in currentData.Values
@@ -254,13 +256,14 @@ namespace sma_visualisation
                     values.Add(avgValue);
                     barChartData.xAxisLabels.Add(minDate.ToString("yyyy."));
                 }
+                barChartX.Title = "Period (yyyy.)";
                 //grupisi po godinama
                 //lineChartData.xAxisLabels.Add(); // ubaci godine
             }
             else
             {
-                DateTime minDate = dates.OrderBy(v => v.Date).First().Date;
-                DateTime maxDate = dates.OrderBy(v => v.Date).Last().Date;
+                DateTime minDate = dates.First().Date;
+                DateTime maxDate = dates.Last().Date;
                 for (; minDate < maxDate; minDate = minDate.AddMonths(1))
                 {
                     List<double> valuesInMonth = (from allValues in currentData.Values
@@ -268,8 +271,9 @@ namespace sma_visualisation
                                                   select allValues.Value).ToList();
                     double avgValue = valuesInMonth.Count > 0 ? valuesInMonth.Average() : 0.0;
                     values.Add(avgValue);
-                    barChartData.xAxisLabels.Add(minDate.ToString("mm.yyyy."));
+                    barChartData.xAxisLabels.Add(minDate.ToString("MM.yyyy."));
                 }
+                barChartX.Title = "Period (MM. yyyy.)";
                 //grupisi po mesecima
                 //lineChartData.xAxisLabels.Add(); // ubaci mesece
             }
@@ -326,7 +330,7 @@ namespace sma_visualisation
             try
             {
                 
-                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type);
+                Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view_days);
                 currentData = loaded_data;
                 if (interval_view_days != "all")
                 {
@@ -355,6 +359,10 @@ namespace sma_visualisation
             catch(InvalidApiCallException exception)
             {
                 MessageBox.Show(exception.message);
+            }
+            catch (NoConnectionException noConnection)
+            {
+                MessageBox.Show(noConnection.message);
             }
         }
 

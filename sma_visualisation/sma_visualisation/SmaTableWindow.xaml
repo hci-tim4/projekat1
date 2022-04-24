@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:sma_visualisation"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="SMA Values"
         Icon="\graphic.png"
+        
         Height="450" Width="800" >
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         <Grid Background="#EEE2DC">
@@ -67,7 +69,8 @@
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-
+                <Button FontWeight="Bold" x:Name="currentDataBtn" Background="#BAB2B5" Content="Current data" MinWidth="50" MaxWidth="150" 
+                    Click="currentDataBtn_Click" HorizontalAlignment="Right"></Button>
             </StackPanel>
             <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
                    ItemsSource="{Binding Path=Values }"
@@ -76,12 +79,11 @@
                    Grid.Row="1" Grid.ColumnSpan="3" Background="#EEE2DC" CanUserSortColumns="False">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date (yyyy.MM.dd HH:mm)" Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"/>
+                    <DataGridTextColumn Header="Date (dd.MM.yyyy. HH:mm)" Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"/>
                     <DataGridTextColumn Header="Value" Binding="{Binding Path=Value}"/>
                 </DataGrid.Columns>
 
             </DataGrid>
-            <Label Grid.Row="2" Grid.Column="1" FontWeight="Bold" Content="Number of views per page:" HorizontalContentAlignment="Right"></Label>
             <WrapPanel HorizontalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="3">
                 <Button Height="23" 
                 Name="btnFirst" Width="40" 
@@ -95,6 +97,9 @@
                 <Button Height="23"
                 Name="btnNext" Width="40" 
                 Content="&gt;" Click="btnNext_Click" Opacity="0.75"/>
+                <Button Height="23"  Width="40" x:Name="btnLast" 
+                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
+                <Label Grid.Row="2" Grid.Column="1" FontWeight="Bold" Content="Number of elements:" HorizontalContentAlignment="Right"></Label>
                 <ComboBox x:Name="cbNumberOfRecords" Width="120"  SelectedIndex="0" Height="23"
                 SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75">
                     <ComboBoxItem>5</ComboBoxItem>
@@ -102,8 +107,6 @@
                     <ComboBoxItem>20</ComboBoxItem>
                     <ComboBoxItem>30</ComboBoxItem>
                 </ComboBox>
-                <Button Height="22"  Width="40" x:Name="btnLast" 
-                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
             </WrapPanel>
 
         </Grid>
