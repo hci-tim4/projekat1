@@ -138,14 +138,14 @@ namespace sma_visualisation
                     notify = notify + str ;
                     if (str != hasToBeAdded[hasToBeAdded.Count - 1])
                     {
-                        notify = notify + " ,";
+                        notify = notify + ", ";
                     }
                     else
                     {
                         notify = notify + "!";
                     }
                 }
-                MessageBox.Show(notify);
+                MessageBox.Show(notify, "Error");
                 return;
             }
 
@@ -171,15 +171,15 @@ namespace sma_visualisation
             }
             catch(NoDataException exeption)
             {
-                MessageBox.Show(exeption.message);
+                MessageBox.Show(exeption.message, "Error");
             }
             catch(InvalidApiCallException exception)
             {
-                MessageBox.Show(exception.message);
+                MessageBox.Show(exception.message, "Error");
             }
             catch (NoConnectionException noConnection)
             {
-                MessageBox.Show(noConnection.message);
+                MessageBox.Show(noConnection.message, "Error");
             }
             finally
             {
@@ -307,6 +307,8 @@ namespace sma_visualisation
 
         private void show_table_Click(object sender, RoutedEventArgs e)
         {
+            if (hasToBeAdded.Count != 0)
+                hasToBeAdded.Clear();
             string symbol = read_symbol_tb();
             int time_period = read_time_period_value();
             string series_type = read_series_type_cb();
@@ -322,14 +324,14 @@ namespace sma_visualisation
                     notify = notify + str;
                     if (str != hasToBeAdded[hasToBeAdded.Count - 1])
                     {
-                        notify = notify + " ,";
+                        notify = notify + ", ";
                     }
                     else
                     {
                         notify = notify + "!";
                     }
                 }
-                MessageBox.Show(notify);
+                MessageBox.Show(notify, "Error");
                 return;
             }
            
@@ -346,12 +348,12 @@ namespace sma_visualisation
                 }
                 if (currentData == null)
                 {
-                    MessageBox.Show("There has to be selected values");
+                    MessageBox.Show("There has to be selected values", "Error");
                     return;
                 }
                 if (currentData.Values.Count == 0)
                 {
-                    MessageBox.Show("There are no reults for the chosen data");
+                    MessageBox.Show("There are no reults for the chosen data", "Error");
                     return;
                 }
                 Window tableWindow = new SmaTableWindow(currentData);
@@ -360,15 +362,15 @@ namespace sma_visualisation
             }
             catch(NoDataException exeption)
             {
-                MessageBox.Show(exeption.message);
+                MessageBox.Show(exeption.message, "Error");
             }
             catch(InvalidApiCallException exception)
             {
-                MessageBox.Show(exception.message);
+                MessageBox.Show(exception.message, "Error");
             }
             catch (NoConnectionException noConnection)
             {
-                MessageBox.Show(noConnection.message);
+                MessageBox.Show(noConnection.message, "Error");
             }
         }
 
