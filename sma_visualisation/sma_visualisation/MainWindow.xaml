@@ -130,7 +130,7 @@
                             <lvc:Axis Title="Value" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Title="Date (dd.mm.yyyy.)" Labels="{Binding Path=lineChartData.xAxisLabels}"></lvc:Axis>
+                            <lvc:Axis Title="Date (dd.MM.yyyy.)" Labels="{Binding Path=lineChartData.xAxisLabels}"></lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
                 </WrapPanel>

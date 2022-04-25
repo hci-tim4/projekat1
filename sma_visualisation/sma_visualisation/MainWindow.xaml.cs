@@ -181,6 +181,10 @@ namespace sma_visualisation
             {
                 MessageBox.Show(noConnection.message, "Error");
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ups, a not awaited error happened", "Error");
+            }
             finally
             {
                 ibox.Close();
@@ -201,7 +205,6 @@ namespace sma_visualisation
             {
                 values.Add(sma.Value);
                 lineChartData.xAxisLabels.Add(sma.Date.ToString("dd. MM. yyyy."));
-                lineChartData.yAxisLabels.Add(sma.Value.ToString());
 
 
             }
@@ -224,7 +227,7 @@ namespace sma_visualisation
 
             });
 
-            DataContext = this;
+            //DataContext = this;
 
             var lineChartObject = (CartesianChart)this.FindName("lineChart");
             lineChartObject.HideLegend();
@@ -334,10 +337,11 @@ namespace sma_visualisation
                 MessageBox.Show(notify, "Error");
                 return;
             }
-           
+
+            Window ibox = new InformationBox();
             try
             {
-                
+                ibox.Show();
                 Data loaded_data = ApiProcessing.loadAPI(symbol, interval, Convert.ToString(time_period), series_type, interval_view);
                 currentData = loaded_data;
                 if (interval_view_days != "all")
@@ -348,11 +352,13 @@ namespace sma_visualisation
                 }
                 if (currentData == null)
                 {
+                    ibox.Close();
                     MessageBox.Show("There has to be selected values", "Error");
                     return;
                 }
                 if (currentData.Values.Count == 0)
                 {
+                    ibox.Close();
                     MessageBox.Show("There are no reults for the chosen data", "Error");
                     return;
                 }
@@ -371,6 +377,14 @@ namespace sma_visualisation
             catch (NoConnectionException noConnection)
             {
                 MessageBox.Show(noConnection.message, "Error");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ups, a not awaited error happened", "Error");
+            }
+            finally
+            {
+                ibox.Close();
             }
         }
 
