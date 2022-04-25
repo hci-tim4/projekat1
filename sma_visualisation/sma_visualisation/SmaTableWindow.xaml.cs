@@ -287,7 +287,11 @@ namespace sma_visualisation
                 return;
             }
             double value = 0;
-            double.TryParse(valueStr, out value);
+            if (!double.TryParse(valueStr, out value))
+            {
+                MessageBox.Show("Value has to be a number", "Error");
+                return;
+            }
             //not string
 
             getAdecvatValues(relOp, value);
