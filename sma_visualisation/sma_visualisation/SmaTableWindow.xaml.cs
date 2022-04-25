@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -286,15 +287,17 @@ namespace sma_visualisation
             {
                 return;
             }
-            double value = 0;
-            if (!double.TryParse(valueStr, out value))
+            try
+            {
+                double value = Double.Parse(valueStr.Trim(), CultureInfo.InvariantCulture);
+
+                getAdecvatValues(relOp, value);
+            }
+            catch
             {
                 MessageBox.Show("Value has to be a number", "Error");
                 return;
             }
-            //not string
-
-            getAdecvatValues(relOp, value);
 
         }
 
