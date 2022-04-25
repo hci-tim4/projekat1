@@ -35,6 +35,10 @@ namespace sma_visualisation
                     throw new InvalidApiCallException("Invalid API call");
                    
                 }
+                else if (!json_data.ContainsKey("Meta Data") && !json_data.ContainsKey("Technical Analysis: SMA"))
+                {
+                    throw new NoDataException("There is a limit for calls, please try again later");
+                }
                 else { 
 
                 string data = Convert.ToString(json_data["Meta Data"]);
